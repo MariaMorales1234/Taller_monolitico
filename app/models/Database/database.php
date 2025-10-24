@@ -1,20 +1,21 @@
 <?php
-
-namespace App\Models\Databases;
+// No hay namespace porque el proyecto no usa Composer
+// y se incluirá manualmente con require_once
 
 use mysqli;
 use Exception;
 
-class GrupoAvanzadaDB
+class Database
 {
     private $hostDb = "localhost";
-    private $nameDb = "taller_monolitico";
+    private $nameDb = "taller_monolitico"; //Cambiar por el nombre que tengan en el phpmyadmin
     private $userDb = "root";
-    private $pwdDb = "12345*QWE";
+    private $pwdDb  = "12345*QWE"; // Cambia r por la contraseña que tenga en el mysql
     private $conexDb = null;
 
     public function __construct()
     {
+        // Crear conexión
         $this->conexDb = new mysqli(
             $this->hostDb,
             $this->userDb,
@@ -22,19 +23,29 @@ class GrupoAvanzadaDB
             $this->nameDb
         );
 
+        // Validar conexión
         if ($this->conexDb->connect_error) {
-            die("❌ Error de conexión: " . $this->conexDb->connect_error);
+            die("❌ Error de conexión a la base de datos: " . $this->conexDb->connect_error);
         }
 
-        // Establecer codificación
+        // Codificación UTF-8 para caracteres especiales
         $this->conexDb->set_charset("utf8mb4");
     }
 
     /**
-     * Ejecuta cualquier consulta SQL
-     * @param string $sql
-     * @param string|null $types  (por ejemplo "ssi")
-     * @param mixed ...$params
+     * Permite obtener la conexión directa (si se necesita)
+     */
+    public function getConnection()
+    {
+        return $this->conexDb;
+    }
+
+    /**
+     * Ejecuta consultas SQL seguras usando prepared statements
+     * 
+     * @param string $sql   Consulta SQL
+     * @param string|null $types Tipos de parámetros ("ssi", etc.)
+     * @param mixed ...$params  Parámetros de la consulta
      * @return mixed (mysqli_result | bool)
      */
     public function execSQL(string $sql, ?string $types = null, ...$params)
@@ -42,13 +53,15 @@ class GrupoAvanzadaDB
         $stmt = $this->conexDb->prepare($sql);
 
         if (!$stmt) {
-            throw new Exception("Error al preparar la consulta: " . $this->conexDb->error);
+            die("⚠️ Error al preparar la consulta: " . $this->conexDb->error);
         }
 
+        // Si hay tipos y parámetros, enlazarlos
         if ($types && !empty($params)) {
             $stmt->bind_param($types, ...$params);
         }
 
+        // Determinar si es SELECT o no
         $isSelect = str_starts_with(strtoupper(trim($sql)), "SELECT");
 
         if ($isSelect) {
@@ -63,6 +76,9 @@ class GrupoAvanzadaDB
         }
     }
 
+    /**
+     * Cierra la conexión a la base de datos
+     */
     public function closeDB()
     {
         if ($this->conexDb) {
@@ -70,3 +86,4 @@ class GrupoAvanzadaDB
         }
     }
 }
+
