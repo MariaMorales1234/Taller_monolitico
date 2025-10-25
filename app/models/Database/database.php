@@ -10,7 +10,7 @@ class Database
     private $hostDb = "localhost";
     private $nameDb = "taller_monolitico"; //Cambiar por el nombre que tengan en el phpmyadmin
     private $userDb = "root";
-    private $pwdDb  = "12345*QWE"; // Cambia r por la contraseña que tenga en el mysql
+    private $pwdDb  = "12345*QWE"; // Cambiar por la contraseña que tenga en el mysql
     private $conexDb = null;
 
     public function __construct()
@@ -43,10 +43,10 @@ class Database
     /**
      * Ejecuta consultas SQL seguras usando prepared statements
      * 
-     * @param string $sql   Consulta SQL
-     * @param string|null $types Tipos de parámetros ("ssi", etc.)
-     * @param mixed ...$params  Parámetros de la consulta
-     * @return mixed (mysqli_result | bool)
+     * @param string 
+     * @param string|null 
+     * @param mixed
+     * @return mixed 
      */
     public function execSQL(string $sql, ?string $types = null, ...$params)
     {

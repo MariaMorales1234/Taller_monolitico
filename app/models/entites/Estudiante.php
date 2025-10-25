@@ -1,4 +1,8 @@
 <?php
+namespace App\Model\Entities;
+
+use Database;
+
 require_once __DIR__ . '/../database/Database.php';
 
 class Estudiante
