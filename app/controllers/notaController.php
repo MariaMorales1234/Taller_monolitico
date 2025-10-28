@@ -1,9 +1,9 @@
 <?php
 namespace App\Controller;
 
-use App\Model\Entities\Nota;
+use App\Models\Entites\Nota;
 
-require_once __DIR__ . '/../model/entities/Nota.php';
+require_once __DIR__ . '/../models/entities/Nota.php';
 
 class NotaController
 {

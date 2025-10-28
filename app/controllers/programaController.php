@@ -1,17 +1,16 @@
 <?php
 namespace App\Controller;
 
-use App\Model\Entities\Programa;
+use App\Models\Entites\Programa;
 
-require_once __DIR__ . '/../model/entities/Programa.php';
+require_once __DIR__ . '/../models/entites/Programa.php';
 
-class ProgramaController
-{
+class ProgramaController{
     private $model;
 
     public function __construct()
     {
-        $this->model = new Programa();
+        $this -> model = new Programa();
     }
 
     public function index()
