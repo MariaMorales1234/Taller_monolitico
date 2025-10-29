@@ -4,7 +4,6 @@ use App\Controller\NotaController;
 
 $controller = new NotaController();
 
-// Validar que el formulario llegó por método POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Recuperar y limpiar los datos
@@ -30,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($ok) {
         echo "<script>alert('Nota registrada correctamente.'); window.location.href='index.php';</script>";
     } else {
-        echo "<script>alert('Error al registrar la nota. Verifique los datos.'); window.history.back();</script>";
+        echo "<script>alert('Error al registrar la nota. Es posible que ya exista una nota con esos datos.'); window.history.back();</script>";
     }
 
 } else {

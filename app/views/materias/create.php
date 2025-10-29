@@ -6,7 +6,7 @@ use App\Controller\MateriaController;
 use App\Controller\ProgramaController;
 
 $programaController = new ProgramaController();
-$programas = $programaController->getAll(); // Método correcto
+$programas = $programaController->getAll(); // ✅ Método correcto
 ?>
 
 <!DOCTYPE html>

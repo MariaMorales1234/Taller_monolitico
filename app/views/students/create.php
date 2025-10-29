@@ -1,40 +1,63 @@
-<?php include_once __DIR__ .'/../partials/header.php';?>
-<?php include_once __DIR__ .'/../partials/navbar.php';?>
+<?php
+include_once __DIR__ . '/../../partials/header.php';
+require_once __DIR__ . '/../../controllers/ProgramaController.php';
 
-<div class="container">
-  <h2>Registrar nuevo estudiante</h2>
+$programaController = new ProgramaController();
+$programas = $programaController->getAll();
+?>
 
-  <form action="../../controllers/EstudianteController.php?action=store" method="POST" class="formulario">
-    <div class="campo">
-      <label for="codigo">Código:</label>
-      <input type="text" id="codigo" name="codigo" required>
-    </div>
+<div class="container mt-4">
+    <h2>Registrar Nuevo Estudiante</h2>
 
-    <div class="campo">
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" required>
-    </div>
+    <form action="save.php" method="POST" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label for="codigo" class="form-label">Código</label>
+            <input type="text" class="form-control" id="codigo" name="codigo" required maxlength="10">
+            <div class="invalid-feedback">El código es obligatorio.</div>
+        </div>
 
-    <div class="campo">
-      <label for="correo">Correo electrónico:</label>
-      <input type="email" id="correo" name="correo" required>
-    </div>
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" required maxlength="100">
+            <div class="invalid-feedback">El nombre es obligatorio.</div>
+        </div>
 
-    <div class="campo">
-      <label for="programa">Programa de formación:</label>
-      <select id="programa" name="programa" required>
-        <option value="">Seleccione un programa</option>
-        <?php foreach ($programas as $prog): ?>
-          <option value="<?= $prog['id'] ?>"><?= htmlspecialchars($prog['nombre']) ?></option>
-        <?php endforeach; ?>
-      </select>
-    </div>
+        <div class="mb-3">
+            <label for="correo" class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control" id="correo" name="correo" required maxlength="100">
+            <div class="invalid-feedback">El correo es obligatorio y debe tener un formato válido.</div>
+        </div>
 
-    <div class="acciones-form">
-      <button type="submit" class="btn">Guardar</button>
-      <a href="index.php" class="btn-cancelar">Cancelar</a>
-    </div>
-  </form>
+        <div class="mb-3">
+            <label for="programa" class="form-label">Programa de Formación</label>
+            <select id="programa" name="programa" class="form-select" required>
+                <option value="">Seleccione un programa</option>
+                <?php foreach ($programas as $prog): ?>
+                    <option value="<?= htmlspecialchars($prog['codigo']) ?>"><?= htmlspecialchars($prog['nombre']) ?></option>
+                <?php endforeach; ?>
+            </select>
+            <div class="invalid-feedback">Debe seleccionar un programa.</div>
+        </div>
+
+        <button type="submit" class="btn btn-success">Guardar Estudiante</button>
+        <a href="index.php" class="btn btn-secondary">Cancelar</a>
+    </form>
 </div>
 
-<?php include_once __DIR__ . '/../partials/footer.php'; ?>
+<script>
+(() => {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()
+</script>
+
+<?php include_once __DIR__ . '/../../partials/footer.php'; ?>

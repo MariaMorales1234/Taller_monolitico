@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../controller/MateriaController.php';
 use App\Controller\MateriaController;
 
 $controller = new MateriaController();
-$materias = $controller->getAll(); // Método correcto
+$materias = $controller->getAll(); // ✅ método correcto
 ?>
 
 <!DOCTYPE html>
