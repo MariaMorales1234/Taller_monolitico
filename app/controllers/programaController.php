@@ -1,9 +1,8 @@
 <?php
 namespace App\Controller;
 
-use App\Models\Entites\Programa;
-
-require_once __DIR__ . '/../models/entites/Programa.php';
+require_once __DIR__ . '/../models/entities/Programa.php';
+use App\Models\Entities\Programa;
 
 class ProgramaController
 {
@@ -14,20 +13,20 @@ class ProgramaController
         $this->model = new Programa();
     }
 
-    // 🔹 Muestra la lista de programas (para la vista)
+    // Mostrar todos los programas
     public function index()
     {
         $programas = $this->model->obtenerTodos();
-        include __DIR__ . '/../view/programas/index.php';
+        include __DIR__ . '/../views/programas/index.php';
     }
 
-    // 🔹 Muestra el formulario de creación
+    // Formulario de creación
     public function create()
     {
-        include __DIR__ . '/../view/programas/create.php';
+        include __DIR__ . '/../views/programas/create.php';
     }
 
-    // 🔹 Guarda un nuevo programa
+    // Guardar nuevo programa
     public function store()
     {
         if (!empty($_POST['codigo']) && !empty($_POST['nombre'])) {
@@ -35,23 +34,23 @@ class ProgramaController
             header("Location: index.php?controller=programa&action=index");
             exit;
         } else {
-            echo "⚠️ Todos los campos son obligatorios.";
+            echo "Todos los campos son obligatorios.";
         }
     }
 
-    // 🔹 Muestra el formulario de edición
+    // Formulario de edición
     public function edit()
     {
         $codigo = $_GET['codigo'] ?? null;
         if ($codigo) {
             $programa = $this->model->obtenerPorCodigo($codigo);
-            include __DIR__ . '/../view/programas/edit.php';
+            include __DIR__ . '/../views/programas/edit.php';
         } else {
             echo "No se encontró el programa.";
         }
     }
 
-    // 🔹 Actualiza un programa existente
+    // Actualizar programa
     public function update()
     {
         if (!empty($_POST['codigo']) && !empty($_POST['nombre'])) {
@@ -59,11 +58,11 @@ class ProgramaController
             header("Location: index.php?controller=programa&action=index");
             exit;
         } else {
-            echo "⚠️ Datos incompletos.";
+            echo "Datos incompletos.";
         }
     }
 
-    // 🔹 Elimina un programa
+    // Eliminar programa
     public function delete()
     {
         $codigo = $_GET['codigo'] ?? null;
@@ -76,6 +75,7 @@ class ProgramaController
         }
     }
 
+    // Obtener todos los programas (uso auxiliar)
     public function getAll()
     {
         return $this->model->obtenerTodos();

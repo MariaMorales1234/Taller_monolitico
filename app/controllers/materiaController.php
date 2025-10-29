@@ -13,17 +13,20 @@ class MateriaController
         $this->model = new Materia();
     }
 
+    // Mostrar todas las materias
     public function index()
     {
-        $materias = $this->model->obtenerTodas();
+        $materias = $this->model->obtenerTodos();
         include __DIR__ . '/../view/materias/index.php';
     }
 
+    // Formulario de creación
     public function create()
     {
         include __DIR__ . '/../view/materias/create.php';
     }
 
+    // Guardar nueva materia
     public function store()
     {
         if (!empty($_POST['codigo']) && !empty($_POST['nombre']) && !empty($_POST['programa'])) {
@@ -35,7 +38,7 @@ class MateriaController
         }
     }
 
-
+    // Formulario de edición
     public function edit()
     {
         $codigo = $_GET['codigo'] ?? null;
@@ -47,10 +50,11 @@ class MateriaController
         }
     }
 
+    // Actualizar materia
     public function update()
     {
-        if (!empty($_POST['codigo']) && !empty($_POST['nombre'])) {
-            $this->model->actualizar($_POST['codigo'], $_POST['nombre']);
+        if (!empty($_POST['codigo']) && !empty($_POST['nombre']) && !empty($_POST['programa'])) {
+            $this->model->actualizar($_POST['codigo'], $_POST['nombre'], $_POST['programa']);
             header("Location: index.php?controller=materia&action=index");
             exit;
         } else {
@@ -58,6 +62,7 @@ class MateriaController
         }
     }
 
+    // Eliminar materia
     public function delete()
     {
         $codigo = $_GET['codigo'] ?? null;
@@ -70,14 +75,9 @@ class MateriaController
         }
     }
 
-    // Método adicional para vistas directas (show)
-    public function show($codigo)
-    {
-        return $this->model->obtenerPorCodigo($codigo);
-    }
-
+    // Obtener todas las materias (para otras vistas o controladores)
     public function getAll()
     {
-    return $this->model->obtenerTodas();
+        return $this->model->obtenerTodos();
     }
 }
