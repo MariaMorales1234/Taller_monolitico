@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__ . '/../../partials/header.php';
+
 
 use App\Model\Entities\Programa;
 require_once __DIR__ . '/../../model/entities/Programa.php';

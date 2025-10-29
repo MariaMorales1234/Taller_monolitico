@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use App\Models\Entites\Nota;
 
-require_once __DIR__ . '/../models/entites/Nota.php';
+require_once __DIR__ . '/../models/entities/Nota.php';
 
 class NotaController
 {
@@ -14,96 +14,66 @@ class NotaController
         $this->model = new Nota();
     }
 
-    // Listar todas las notas
+    // 🔹 Mostrar todas las notas
     public function index()
     {
         $notas = $this->model->obtenerTodas();
         include __DIR__ . '/../view/notas/index.php';
     }
 
-    // Mostrar formulario para crear nueva nota
+    // 🔹 Mostrar formulario de creación
     public function create()
     {
         include __DIR__ . '/../view/notas/create.php';
     }
 
-    // Guardar una nueva nota
-    public function store($estudiante = null, $materia = null, $actividad = null, $nota = null)
+    // 🔹 Guardar una nueva nota
+    public function store()
     {
-        if ($estudiante && $materia && $actividad && $nota !== null) {
-            return $this->model->crear($estudiante, $materia, $actividad, $nota);
-        }
-
-    // Si se usa desde un formulario sin parámetros explícitos
-        if (!empty($_POST['estudiante']) && !empty($_POST['materia']) && !empty($_POST['actividad']) && isset($_POST['nota'])) {
-            $this->model->crear($_POST['estudiante'], $_POST['materia'], $_POST['actividad'], $_POST['nota']);
-            header("Location: index.php");
+        if (!empty($_POST['estudiante_id']) && !empty($_POST['materia_id']) && !empty($_POST['nota'])) {
+            $this->model->crear($_POST['estudiante_id'], $_POST['materia_id'], $_POST['nota']);
+            header("Location: index.php?controller=nota&action=index");
             exit;
+        } else {
+            echo "⚠️ Todos los campos son obligatorios.";
         }
-
-        echo "Todos los campos son obligatorios.";
-        return false;
     }
 
-
-    //  Mostrar formulario de edición
+    // 🔹 Editar nota (por id)
     public function edit()
     {
-        $actividad = $_GET['actividad'] ?? null;
-
-        if ($actividad) {
-            $nota = $this->model->obtenerPorActividad($actividad);
+        $id = $_GET['id'] ?? null;
+        if ($id) {
+            $nota = $this->model->obtenerPorId($id);
             include __DIR__ . '/../view/notas/edit.php';
         } else {
             echo "No se encontró la nota.";
         }
     }
 
-    // Actualizar una nota
+    // 🔹 Actualizar nota (por id)
     public function update()
     {
-        if (!empty($_POST['actividad']) && isset($_POST['nota'])) {
-            $actividad = $_POST['actividad'];
-            $nota = floatval($_POST['nota']);
-
-            if ($nota < 0 || $nota > 5) {
-                echo "La nota debe estar entre 0 y 5.";
-                return;
-            }
-
-            $this->model->actualizar($actividad, $nota);
+        if (!empty($_POST['id']) && isset($_POST['nota'])) {
+            $this->model->actualizar($_POST['id'], $_POST['nota']);
             header("Location: index.php?controller=nota&action=index");
             exit;
         } else {
-            echo "Datos incompletos.";
+            echo "⚠️ Datos incompletos.";
         }
     }
 
-    // Eliminar nota
+    // 🔹 Eliminar nota (por id)
     public function delete()
     {
-        $actividad = $_GET['actividad'] ?? null;
-
-        if ($actividad) {
-            $this->model->eliminar($actividad);
+        $id = $_GET['id'] ?? null;
+        if ($id) {
+            $this->model->eliminar($id);
             header("Location: index.php?controller=nota&action=index");
             exit;
         } else {
             echo "No se especificó la nota a eliminar.";
         }
     }
-
-    // Obtener todas las notas (para vistas o selects)
-    public function getAll()
-    {
-        return $this->model->obtenerTodas();
-    }
-
-    public function obtenerNota($materia, $estudiante, $actividad)
-    {
-    // Asegúrate de que tu modelo Nota tiene el método obtenerPorClave()
-    return $this->model->obtenerPorClave($materia, $estudiante, $actividad);
-    }
-
 }
 
