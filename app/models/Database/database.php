@@ -10,7 +10,7 @@ class Database
     private $hostDb = "localhost";
     private $nameDb = "taller_monolitico"; //Cambiar por el nombre que tengan en el phpmyadmin
     private $userDb = "root";
-    private $pwdDb  = "12345*QWE"; // Cambiar por la contraseña que tenga en el mysql
+    private $pwdDb  = "Ana10776650648"; // Cambiar por la contraseña que tenga en el mysql
     private $conexDb = null;
 
     public function __construct()
@@ -25,7 +25,7 @@ class Database
 
         // Validar conexión
         if ($this->conexDb->connect_error) {
-            die("❌ Error de conexión a la base de datos: " . $this->conexDb->connect_error);
+            die(" Error de conexión a la base de datos: " . $this->conexDb->connect_error);
         }
 
         // Codificación UTF-8 para caracteres especiales
@@ -53,7 +53,7 @@ class Database
         $stmt = $this->conexDb->prepare($sql);
 
         if (!$stmt) {
-            die("⚠️ Error al preparar la consulta: " . $this->conexDb->error);
+            die(" Error al preparar la consulta: " . $this->conexDb->error);
         }
 
         // Si hay tipos y parámetros, enlazarlos

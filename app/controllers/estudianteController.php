@@ -35,7 +35,7 @@ class EstudianteController
             header("Location: index.php?controller=estudiante&action=index");
             exit;
         } else {
-            echo "⚠️ Todos los campos son obligatorios.";
+            echo "Todos los campos son obligatorios.";
         }
     }
 
@@ -59,7 +59,7 @@ class EstudianteController
             header("Location: index.php?controller=estudiante&action=index");
             exit;
         } else {
-            echo "⚠️ Datos incompletos.";
+            echo "Datos incompletos.";
         }
     }
 

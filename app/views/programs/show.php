@@ -1,14 +1,18 @@
 <?php
 include_once __DIR__ . '/../../partials/header.php';
-require_once __DIR__ . '/../../controllers/ProgramaController.php';
+
+use App\Model\Entities\Programa;
+require_once __DIR__ . '/../../model/entities/Programa.php';
+
 
 $codigo = $_GET['codigo'] ?? null;
 if (!$codigo) {
     die("Código de programa no proporcionado.");
 }
 
-$controller = new ProgramaController(); // colocar cuando se trabaje en el controller
-$programa = $controller->show($codigo);
+$programaModel = new Programa(); 
+$programa = $programaModel->obtenerPorCodigo($codigo);
+
 
 if (!$programa) {
     echo '<div class="container mt-4"><div class="alert alert-danger">Programa no encontrado.</div><a href="index.php" class="btn btn-primary">Volver</a></div>';

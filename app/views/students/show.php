@@ -1,11 +1,15 @@
 <?php
-include_once __DIR__ .'/../partials/header.php';
-require_once __DIR__ .'/../../models/studentModel.php';
+include_once __DIR__ . '/../partials/header.php';
+
+use App\Model\Entities\Estudiante;
+require_once __DIR__ . '/../../model/entities/Estudiante.php';
 
 $codigo = $_GET['codigo'] ?? null;
 $estudiante = null;
+
 if ($codigo) {
-    $estudiante =  StudenByCode($codigo); // agregar en model la funcion de buscar por codigo
+    $estudianteModel = new Estudiante();
+    $estudiante = $estudianteModel->obtenerPorCodigo($codigo);
 }
 ?>
 
