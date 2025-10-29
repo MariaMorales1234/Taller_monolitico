@@ -15,7 +15,6 @@ class Estudiante
         $this->db = new Database();
     }
 
-    // Obtener todos los estudiantes con su programa
     public function obtenerTodos()
     {
         $sql = "SELECT e.codigo, e.nombre, e.email, p.nombre AS programa
@@ -24,8 +23,6 @@ class Estudiante
         $result = $this->db->execSQL($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-
-    // Obtener estudiante por código
     public function obtenerPorCodigo($codigo)
     {
         $sql = "SELECT e.codigo, e.nombre, e.email, p.nombre AS programa
@@ -36,7 +33,6 @@ class Estudiante
         return $result->fetch_assoc();
     }
 
-    // Crear estudiante
     public function crear($codigo, $nombre, $email, $programa)
     {
         $sql = "INSERT INTO {$this->table} (codigo, nombre, email, programa)
@@ -44,7 +40,6 @@ class Estudiante
         return $this->db->execSQL($sql, "ssss", $codigo, $nombre, $email, $programa);
     }
 
-    // Actualizar estudiante (nombre, email, programa)
     public function actualizar($codigo, $nombre, $email, $programa)
     {
         $sql = "UPDATE {$this->table}
@@ -53,7 +48,6 @@ class Estudiante
         return $this->db->execSQL($sql, "ssss", $nombre, $email, $programa, $codigo);
     }
 
-    // Eliminar estudiante (solo si no tiene notas)
     public function eliminar($codigo)
     {
         $sqlCheck = "SELECT COUNT(*) AS total FROM notas WHERE estudiante = ?";

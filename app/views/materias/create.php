@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../controllers/MateriaController.php';
 require_once __DIR__ . '/../../controllers/ProgramaController.php';
 
 $programaController = new ProgramaController();
-$programas = $programaController->getAll(); // ✅ Método correcto
+$programas = $programaController->getAll(); 
 ?>
 
 <!DOCTYPE html>

@@ -14,7 +14,7 @@ class Database
 
     public function __construct()
     {
-        // Crear conexión
+
         $this->conexDb = new mysqli(
             $this->hostDb,
             $this->userDb,
@@ -31,17 +31,12 @@ class Database
         $this->conexDb->set_charset("utf8mb4");
     }
 
-    /**
-     * Permite obtener la conexión directa (si se necesita)
-     */
     public function getConnection()
     {
         return $this->conexDb;
     }
-
     /**
      * Ejecuta consultas SQL seguras usando prepared statements
-     * 
      * @param string 
      * @param string|null 
      * @param mixed
@@ -55,12 +50,10 @@ class Database
             die(" Error al preparar la consulta: " . $this->conexDb->error);
         }
 
-        // Si hay tipos y parámetros, enlazarlos
         if ($types && !empty($params)) {
             $stmt->bind_param($types, ...$params);
         }
 
-        // Determinar si es SELECT o no
         $isSelect = str_starts_with(strtoupper(trim($sql)), "SELECT");
 
         if ($isSelect) {
@@ -75,9 +68,6 @@ class Database
         }
     }
 
-    /**
-     * Cierra la conexión a la base de datos
-     */
     public function closeDB()
     {
         if ($this->conexDb) {

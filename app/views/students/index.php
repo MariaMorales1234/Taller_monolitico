@@ -4,7 +4,7 @@ include_once __DIR__ . '/../../partials/header.php';
 require_once __DIR__ . '/../../controllers/EstudianteController.php';
 
 $controller = new EstudianteController();
-$estudiantes = $controller->getAll(); // Método que obtiene todos los estudiantes
+$estudiantes = $controller->getAll(); 
 ?>
 
 <div class="container mt-4">

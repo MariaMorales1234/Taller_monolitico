@@ -13,20 +13,17 @@ class MateriaController
         $this->model = new Materia();
     }
 
-    // Mostrar todas las materias
     public function index()
     {
         $materias = $this->model->obtenerTodas();
         include __DIR__ . '/../view/materias/index.php';
     }
 
-    // Formulario de creación
     public function create()
     {
         include __DIR__ . '/../view/materias/create.php';
     }
 
-    // Guardar nueva materia
     public function store()
     {
         if (!empty($_POST['codigo']) && !empty($_POST['nombre']) && !empty($_POST['programa'])) {
@@ -38,7 +35,6 @@ class MateriaController
         }
     }
 
-    // Formulario de edición
     public function edit()
     {
         $codigo = $_GET['codigo'] ?? null;
@@ -50,7 +46,6 @@ class MateriaController
         }
     }
 
-    // Actualizar materia
     public function update()
     {
         if (!empty($_POST['codigo']) && !empty($_POST['nombre']) && !empty($_POST['programa'])) {
@@ -62,7 +57,6 @@ class MateriaController
         }
     }
 
-    // Eliminar materia
     public function delete()
     {
         $codigo = $_GET['codigo'] ?? null;
@@ -75,7 +69,6 @@ class MateriaController
         }
     }
 
-    // Obtener todas las materias (para otras vistas o controladores)
     public function getAll()
     {
         return $this->model->obtenerTodas();

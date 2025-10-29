@@ -14,20 +14,17 @@ class ProgramaController
         $this->model = new Programa();
     }
 
-    // Mostrar todos los programas
     public function index()
     {
         $programas = $this->model->obtenerTodos();
         include __DIR__ . '/../views/programas/index.php';
     }
 
-    // Formulario de creación
     public function create()
     {
         include __DIR__ . '/../views/programas/create.php';
     }
 
-    // Guardar nuevo programa
     public function store()
     {
         if (!empty($_POST['codigo']) && !empty($_POST['nombre'])) {
@@ -39,7 +36,6 @@ class ProgramaController
         }
     }
 
-    // Formulario de edición
     public function edit()
     {
         $codigo = $_GET['codigo'] ?? null;
@@ -51,7 +47,6 @@ class ProgramaController
         }
     }
 
-    // Actualizar programa
     public function update()
     {
         if (!empty($_POST['codigo']) && !empty($_POST['nombre'])) {
@@ -63,7 +58,6 @@ class ProgramaController
         }
     }
 
-    // Eliminar programa
     public function delete()
     {
         $codigo = $_GET['codigo'] ?? null;
@@ -76,13 +70,11 @@ class ProgramaController
         }
     }
 
-    // Obtener todos los programas (uso auxiliar)
     public function getAll()
     {
         return $this->model->obtenerTodos();
     }
 
-    // Mostrar un programa específico por su código
     public function show($codigo)
     {
         if (!$codigo) {
@@ -91,7 +83,6 @@ class ProgramaController
         return $this->model->obtenerPorCodigo($codigo);
     }
 
-// Verificar si el programa puede ser actualizado (sin relaciones)
     public function canUpdate($codigo)
     {
         if (!$codigo) {

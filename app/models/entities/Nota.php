@@ -15,7 +15,6 @@ class Nota
         $this->db = new Database();
     }
 
-    // 🔹 Obtener todas las notas con JOIN a estudiantes y materias
     public function obtenerTodas()
     {
         $sql = "SELECT n.id, n.materia, n.estudiante, n.nota,
@@ -28,7 +27,6 @@ class Nota
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    // 🔹 Obtener nota por su ID
     public function obtenerPorID($id)
     {
         $sql = "SELECT n.id, n.materia, n.estudiante, n.nota,
@@ -42,20 +40,17 @@ class Nota
         return $result->fetch_assoc();
     }
 
-    // 🔹 Crear nueva nota
     public function crear($materia, $estudiante, $nota)
     {
         // Validar rango de nota
         if ($nota < 0 || $nota > 5) return false;
         $nota = round($nota, 2);
 
-        // Validar existencia de la materia
         $sql = "SELECT COUNT(*) AS existe FROM materias WHERE codigo = ?";
         $result = $this->db->execSQL($sql, "s", $materia);
         $row = $result->fetch_assoc();
         if ($row['existe'] == 0) return false;
 
-        // Validar existencia del estudiante
         $sql = "SELECT COUNT(*) AS existe FROM estudiantes WHERE codigo = ?";
         $result = $this->db->execSQL($sql, "s", $estudiante);
         $row = $result->fetch_assoc();
@@ -67,7 +62,6 @@ class Nota
         return $this->db->execSQL($sql, "ssd", $materia, $estudiante, $nota);
     }
 
-    // 🔹 Actualizar nota por ID
     public function actualizar($id, $nota)
     {
         if ($nota < 0 || $nota > 5) return false;
@@ -77,14 +71,12 @@ class Nota
         return $this->db->execSQL($sql, "di", $nota, $id);
     }
 
-    // 🔹 Eliminar nota por ID
     public function eliminar($id)
     {
         $sql = "DELETE FROM {$this->table} WHERE id = ?";
         return $this->db->execSQL($sql, "i", $id);
     }
 
-    // 🔹 Calcular promedio por materia y estudiante
     public function promedioPorMateria($materia, $estudiante)
     {
         $sql = "SELECT ROUND(AVG(nota), 2) AS promedio

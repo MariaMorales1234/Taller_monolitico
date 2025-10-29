@@ -15,20 +15,17 @@ class NotaController
         $this->model = new Nota();
     }
 
-    // Mostrar todas las notas
     public function index()
     {
         $notas = $this->model->obtenerTodas();
         include __DIR__ . '/../views/notas/index.php';
     }
 
-    // Formulario de creación
     public function create()
     {
         include __DIR__ . '/../views/notas/create.php';
     }
 
-    // Guardar nueva nota
     public function store()
     {
         if (
@@ -54,7 +51,6 @@ class NotaController
         return null;
     }
 
-    // Formulario de edición
     public function edit()
     {
         $id = $_GET['id'] ?? null;
@@ -70,7 +66,6 @@ class NotaController
         }
     }
 
-    // Actualizar nota
     public function update()
     {
         if (!empty($_POST['id']) && isset($_POST['nota'])) {
@@ -86,7 +81,6 @@ class NotaController
         }
     }
 
-    // Eliminar nota
     public function delete()
     {
         $id = $_GET['id'] ?? null;
@@ -99,7 +93,6 @@ class NotaController
         }
     }
 
-    // Calcular promedio de un estudiante en una materia
     public function promedio()
     {
         if (!empty($_GET['materia_id']) && !empty($_GET['estudiante_id'])) {
@@ -110,13 +103,11 @@ class NotaController
         }
     }
 
-    // Obtener todas las notas (para otras vistas o controladores)
     public function getAll()
     {
         return $this->model->obtenerTodas();
     }
 
-    // Mostrar una nota específica
     public function show($id)
     {
         $id = $_GET['id'] ?? null;

@@ -6,13 +6,11 @@ $controller = new NotaController();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Recuperar y limpiar los datos
     $estudiante = trim($_POST['estudiante'] ?? '');
     $materia    = trim($_POST['materia'] ?? '');
     $actividad  = trim($_POST['actividad'] ?? '');
     $nota       = $_POST['nota'] ?? null;
 
-    // Validaciones básicas
     if ($estudiante === '' || $materia === '' || $actividad === '' || $nota === null) {
         echo "<script>alert('Todos los campos son obligatorios.'); window.history.back();</script>";
         exit;
@@ -23,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Guardar la nota
     $ok = $controller->store();
 
     if ($ok) {

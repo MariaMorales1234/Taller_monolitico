@@ -20,7 +20,6 @@ if (!$programa) {
     exit;
 }
 
-// Verificar si se puede editar (sin relaciones)
 $canEdit = $controller->canUpdate($codigo);
 if (!$canEdit) {
     echo '<div class="container mt-4">

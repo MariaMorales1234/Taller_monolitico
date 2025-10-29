@@ -15,7 +15,6 @@ class Materia
         $this->db = new Database();
     }
 
-    // Obtener todas las materias con su programa
     public function obtenerTodas()
     {
         $sql = "SELECT m.*, p.nombre AS programa
@@ -25,7 +24,6 @@ class Materia
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    // Obtener materia por código
     public function obtenerPorCodigo($codigo)
     {
         $sql = "SELECT * FROM {$this->table} WHERE codigo = ?";
@@ -33,7 +31,6 @@ class Materia
         return $result->fetch_assoc();
     }
 
-    // Crear materia
     public function crear($codigo, $nombre, $programa_id)
     {
         $sql = "INSERT INTO {$this->table} (codigo, nombre, programa_id)
@@ -41,7 +38,6 @@ class Materia
         return $this->db->execSQL($sql, "ssi", $codigo, $nombre, $programa_id);
     }
 
-    // Actualizar materia (solo si no tiene notas)
     public function actualizar($codigo, $nombre)
     {
         $sqlCheck = "SELECT COUNT(*) AS total FROM notas 
@@ -54,7 +50,6 @@ class Materia
         return $this->db->execSQL($sql, "ss", $nombre, $codigo);
     }
 
-    // Eliminar materia (solo si no tiene notas)
     public function eliminar($codigo)
     {
         $sqlCheck = "SELECT COUNT(*) AS total FROM notas 

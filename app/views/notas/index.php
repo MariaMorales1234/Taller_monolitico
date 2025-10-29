@@ -3,7 +3,7 @@ use App\Controllers\NotaController;
 require_once __DIR__ . '/../../controllers/NotaController.php';
 
 $controller = new NotaController();
-$notas = $controller->getAll(); // Método que retorna todas las notas
+$notas = $controller->getAll(); 
 ?>
 <!DOCTYPE html>
 <html lang="es">

@@ -4,14 +4,14 @@ require_once __DIR__ . '/../../controllers/NotaController.php';
 
 $materia = $_GET['materia'] ?? null;
 $estudiante = $_GET['estudiante'] ?? null;
-$actividad = $_GET['actividad'] ?? null; // 🔹 se agrega este parámetro
+$actividad = $_GET['actividad'] ?? null; 
 
 if (!$materia || !$estudiante || !$actividad) {
-    die("⚠️ No se proporcionaron los parámetros necesarios (materia, estudiante y actividad).");
+    die("No se proporcionaron los parámetros necesarios (materia, estudiante y actividad).");
 }
 
 $controller = new NotaController();
-$nota = $controller->getAll(); // 🔹 coherente con edit.php
+$nota = $controller->getAll();
 
 if (!$nota) {
     echo '<div class="container mt-4"><div class="alert alert-danger">Nota no encontrada.</div><a href="index.php" class="btn btn-primary">Volver</a></div>';

@@ -6,14 +6,12 @@ include_once __DIR__ . '/../../partials/header.php';
     <h2>Registrar Nuevo Programa</h2>
 
     <form action="save.php" method="POST" class="needs-validation" novalidate>
-        <!-- Código del programa -->
         <div class="mb-3">
             <label for="codigo" class="form-label">Código del Programa</label>
             <input type="text" class="form-control" id="codigo" name="codigo" required maxlength="10">
             <div class="invalid-feedback">El código es obligatorio.</div>
         </div>
 
-        <!-- Nombre del programa -->
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre del Programa</label>
             <input type="text" class="form-control" id="nombre" name="nombre" required maxlength="100">
