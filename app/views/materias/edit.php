@@ -7,6 +7,8 @@ if (!$codigo) die("Código no proporcionado.");
 
 $controller = new MateriaController();
 $materia = $controller->show($codigo);
+
+if (!$materia) die("Materia no encontrada.");
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +22,7 @@ $materia = $controller->show($codigo);
 <div class="container mt-4">
     <h2>Editar Materia</h2>
 
-    <form action="update.php" method="POST" class="needs-validation" novalidate>
+    <form action="index.php?controller=materia&action=update" method="POST" class="needs-validation" novalidate>
         <input type="hidden" name="codigo" value="<?= htmlspecialchars($materia['codigo']) ?>">
 
         <div class="mb-3">
@@ -34,7 +36,7 @@ $materia = $controller->show($codigo);
         </div>
 
         <button type="submit" class="btn btn-success">Actualizar</button>
-        <a href="index.php" class="btn btn-secondary">Cancelar</a>
+        <a href="index.php?controller=materia&action=index" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 </body>

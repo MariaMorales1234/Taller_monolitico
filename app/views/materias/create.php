@@ -6,7 +6,7 @@ use App\Controller\MateriaController;
 use App\Controller\ProgramaController;
 
 $programaController = new ProgramaController();
-$programas = $programaController->getAll(); // ✅ usar el nuevo método que retorna array
+$programas = $programaController->getAll(); // Método correcto
 ?>
 
 <!DOCTYPE html>
@@ -32,11 +32,11 @@ $programas = $programaController->getAll(); // ✅ usar el nuevo método que ret
         </div>
 
         <div class="mb-3">
-            <label for="programa" class="form-label">Programa de Formación</label>
-            <select class="form-select" id="programa" name="programa" required>
+            <label for="programa_id" class="form-label">Programa de Formación</label>
+            <select class="form-select" id="programa_id" name="programa_id" required>
                 <option value="">Selecciona un programa</option>
                 <?php foreach ($programas as $prog): ?>
-                    <option value="<?= htmlspecialchars($prog['codigo']) ?>">
+                    <option value="<?= htmlspecialchars($prog['id']) ?>">
                         <?= htmlspecialchars($prog['nombre']) ?>
                     </option>
                 <?php endforeach; ?>
@@ -44,9 +44,8 @@ $programas = $programaController->getAll(); // ✅ usar el nuevo método que ret
         </div>
 
         <button type="submit" class="btn btn-success">Guardar Materia</button>
-        <a href="index.php" class="btn btn-secondary">Cancelar</a>
+        <a href="index.php?controller=materia&action=index" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 </body>
 </html>
-

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Entites;
+namespace App\Model\Entities;
 
-use Database;
+use App\Model\Database\Database;
 
 require_once __DIR__ . '/../database/Database.php';
 
@@ -16,6 +16,7 @@ class Programa
         $this->db = new Database();
     }
 
+    // 🔹 Obtener todos los programas
     public function obtenerTodos()
     {
         $sql = "SELECT * FROM {$this->table}";
@@ -23,6 +24,7 @@ class Programa
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    // 🔹 Obtener programa por código
     public function obtenerPorCodigo($codigo)
     {
         $sql = "SELECT * FROM {$this->table} WHERE codigo = ?";
@@ -30,13 +32,14 @@ class Programa
         return $result->fetch_assoc();
     }
 
+    // 🔹 Crear un nuevo programa
     public function crear($codigo, $nombre)
     {
         $sql = "INSERT INTO {$this->table} (codigo, nombre) VALUES (?, ?)";
         return $this->db->execSQL($sql, "ss", $codigo, $nombre);
     }
 
-    // Solo se puede modificar si no tiene estudiantes ni materias
+    // 🔹 Actualizar (solo si no tiene estudiantes ni materias)
     public function actualizar($codigo, $nombre)
     {
         $sqlCheck = "SELECT (
@@ -52,7 +55,7 @@ class Programa
         return $this->db->execSQL($sql, "ss", $nombre, $codigo);
     }
 
-    // Solo se puede eliminar si no tiene estudiantes ni materias
+    // 🔹 Eliminar (solo si no tiene estudiantes ni materias)
     public function eliminar($codigo)
     {
         $sqlCheck = "SELECT (

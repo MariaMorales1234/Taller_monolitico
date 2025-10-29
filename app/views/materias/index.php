@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../controller/MateriaController.php';
 use App\Controller\MateriaController;
 
 $controller = new MateriaController();
-$materias = $controller->getAll();
+$materias = $controller->getAll(); // Método correcto
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +22,7 @@ $materias = $controller->getAll();
         <div class="alert alert-info">No hay materias registradas.</div>
     <?php else: ?>
     <table class="table table-bordered">
-        <thead>
+        <thead class="table-light">
             <tr>
                 <th>Código</th>
                 <th>Nombre</th>
@@ -38,7 +38,9 @@ $materias = $controller->getAll();
                 <td><?= htmlspecialchars($materia['programa']) ?></td>
                 <td>
                     <a href="edit.php?codigo=<?= urlencode($materia['codigo']) ?>" class="btn btn-warning btn-sm">Editar</a>
-                    <a href="delete.php?codigo=<?= urlencode($materia['codigo']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar materia?');">Eliminar</a>
+                    <a href="../../index.php?controller=materia&action=delete&codigo=<?= urlencode($materia['codigo']) ?>"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('¿Seguro que deseas eliminar esta materia?');">Eliminar</a>
                 </td>
             </tr>
         <?php endforeach; ?>

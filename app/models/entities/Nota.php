@@ -1,5 +1,5 @@
 <?php
-namespace App\Models\Entities;
+namespace App\Model\Entities;
 
 use App\Model\Database\Database;
 
@@ -28,11 +28,11 @@ class Nota
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    // Obtener nota por su ID
+    // 🔹 Obtener nota por su ID
     public function obtenerPorID($id)
     {
         $sql = "SELECT n.id, n.materia, n.estudiante, n.nota,
-                        e.nombre AS nombre_ estudiante,
+                        e.nombre AS nombre_estudiante,
                         m.nombre AS nombre_materia
                 FROM {$this->table} n
                 JOIN estudiantes e ON n.estudiante = e.codigo
@@ -42,33 +42,32 @@ class Nota
         return $result->fetch_assoc();
     }
 
-    // Crear nueva nota
+    // 🔹 Crear nueva nota
     public function crear($materia, $estudiante, $nota)
     {
-        //Valida nota de 0 a 5, con 2 decimales
+        // Validar rango de nota
         if ($nota < 0 || $nota > 5) return false;
         $nota = round($nota, 2);
 
-        //Valida que exista materia
+        // Validar existencia de la materia
         $sql = "SELECT COUNT(*) AS existe FROM materias WHERE codigo = ?";
         $result = $this->db->execSQL($sql, "s", $materia);
         $row = $result->fetch_assoc();
         if ($row['existe'] == 0) return false;
 
-        //Valida que exista estudiante
+        // Validar existencia del estudiante
         $sql = "SELECT COUNT(*) AS existe FROM estudiantes WHERE codigo = ?";
         $result = $this->db->execSQL($sql, "s", $estudiante);
         $row = $result->fetch_assoc();
         if ($row['existe'] == 0) return false;
 
-        //Inserta la nota
+        // Insertar la nota
         $sql = "INSERT INTO {$this->table} (materia, estudiante, nota)
                 VALUES (?, ?, ?)";
         return $this->db->execSQL($sql, "ssd", $materia, $estudiante, $nota);
     }
 
-
-    // Actualizar nota por ID
+    // 🔹 Actualizar nota por ID
     public function actualizar($id, $nota)
     {
         if ($nota < 0 || $nota > 5) return false;
@@ -78,22 +77,21 @@ class Nota
         return $this->db->execSQL($sql, "di", $nota, $id);
     }
 
-    // Eliminar nota por ID
+    // 🔹 Eliminar nota por ID
     public function eliminar($id)
     {
         $sql = "DELETE FROM {$this->table} WHERE id = ?";
         return $this->db->execSQL($sql, "i", $id);
     }
 
-    // Calcular promedio por materia
+    // 🔹 Calcular promedio por materia y estudiante
     public function promedioPorMateria($materia, $estudiante)
     {
         $sql = "SELECT ROUND(AVG(nota), 2) AS promedio
-        FROM {$this->table}
-        WHERE materia = ? AND estudiante = ?";
+                FROM {$this->table}
+                WHERE materia = ? AND estudiante = ?";
         $result = $this->db->execSQL($sql, "ss", $materia, $estudiante);
         $row = $result->fetch_assoc();
         return $row ? $row['promedio'] : 0;
     }
-
 }
