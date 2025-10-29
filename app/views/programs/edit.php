@@ -2,7 +2,7 @@
 include_once __DIR__ . '/../../partials/header.php';
 require_once __DIR__ . '/../../controller/ProgramaController.php'; // 🔹 corregida ruta (singular "controller")
 
-use App\Controller\ProgramaController;
+use App\Controllers\ProgramaController;
 
 $codigo = $_GET['codigo'] ?? null;
 if (!$codigo) {

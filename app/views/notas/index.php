@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/../../controller/NotaController.php'; // 🔹 Cambiado "controllers" → "controller"
-use App\Controller\NotaController;
+use App\Controllers\NotaController;
 
 $controller = new NotaController();
-$notas = $controller->obtenerTodas(); // Método que retorna todas las notas
+$notas = $controller->getAll(); // Método que retorna todas las notas
 ?>
 <!DOCTYPE html>
 <html lang="es">

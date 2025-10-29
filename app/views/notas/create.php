@@ -1,10 +1,10 @@
 <?php
-require_once __DIR__ . '/../../controller/NotaController.php';
-require_once __DIR__ . '/../../controller/EstudianteController.php';
-require_once __DIR__ . '/../../controller/MateriaController.php';
+require_once __DIR__ . '/../../controllers/NotaController.php';
+require_once __DIR__ . '/../../controllers/EstudianteController.php';
+require_once __DIR__ . '/../../controllers/MateriaController.php';
 
-use App\Controller\EstudianteController;
-use App\Controller\MateriaController;
+use App\Controllers\EstudianteController;
+use App\Controllers\MateriaController;
 
 $estudianteController = new EstudianteController();
 $materiaController = new MateriaController();

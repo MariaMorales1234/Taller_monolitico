@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../controller/NotaController.php';
-use App\Controller\NotaController;
+use App\Controllers\NotaController;
 
 $materia = $_GET['materia'] ?? null;
 $estudiante = $_GET['estudiante'] ?? null;
@@ -11,7 +11,7 @@ if (!$materia || !$estudiante || !$actividad) {
 }
 
 $controller = new NotaController();
-$nota = $controller->obtenerNota($materia, $estudiante, $actividad); // 🔹 coherente con edit.php
+$nota = $controller->getAll(); // 🔹 coherente con edit.php
 
 if (!$nota) {
     echo '<div class="container mt-4"><div class="alert alert-danger">Nota no encontrada.</div><a href="index.php" class="btn btn-primary">Volver</a></div>';

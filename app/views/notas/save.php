@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../controller/NotaController.php';
-use App\Controller\NotaController;
+use App\Controllers\NotaController;
 
 $controller = new NotaController();
 
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Guardar la nota
-    $ok = $controller->store($estudiante, $materia, $actividad, (float)$nota);
+    $ok = $controller->store();
 
     if ($ok) {
         echo "<script>alert('Nota registrada correctamente.'); window.location.href='index.php';</script>";

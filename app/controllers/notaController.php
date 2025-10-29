@@ -51,6 +51,7 @@ class NotaController
         } else {
             echo "Todos los campos son obligatorios.";
         }
+        return null;
     }
 
     // Formulario de edición
@@ -113,5 +114,22 @@ class NotaController
     public function getAll()
     {
         return $this->model->obtenerTodas();
+    }
+
+    // Mostrar una nota específica
+    public function show($id)
+    {
+        $id = $_GET['id'] ?? null;
+        if ($id) {
+            $nota = $this->model->obtenerPorId($id);
+            if ($nota) {
+                include __DIR__ . '/../views/notas/show.php';
+            } else {
+                echo "No se encontró la nota.";
+            }
+        } else {
+            echo "Falta el parámetro ID.";
+        }
+        return null;
     }
 }

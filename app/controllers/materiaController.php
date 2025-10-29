@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace App\Controllers;
 
 use App\Model\Entities\Materia;
 require_once __DIR__ . '/../model/entities/Materia.php';
