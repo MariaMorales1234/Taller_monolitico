@@ -1,4 +1,5 @@
 <?php
+use App\Controllers\EstudianteController;
 include_once __DIR__ . '/../../partials/header.php';
 require_once __DIR__ . '/../../controllers/EstudianteController.php';
 

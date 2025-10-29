@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../../controller/NotaController.php';
 use App\Controllers\NotaController;
+require_once __DIR__ . '/../../controllers/NotaController.php';
 
 $materia = $_GET['materia'] ?? null;
 $estudiante = $_GET['estudiante'] ?? null;

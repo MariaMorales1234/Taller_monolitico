@@ -81,4 +81,27 @@ class ProgramaController
     {
         return $this->model->obtenerTodos();
     }
+
+    // Mostrar un programa específico por su código
+    public function show($codigo)
+    {
+        if (!$codigo) {
+            return null;
+        }
+        return $this->model->obtenerPorCodigo($codigo);
+    }
+
+// Verificar si el programa puede ser actualizado (sin relaciones)
+    public function canUpdate($codigo)
+    {
+        if (!$codigo) {
+            return false;
+        }
+
+        $tieneEstudiantes = method_exists($this->model, 'tieneEstudiantes') ? $this->model->tieneEstudiantes($codigo) : false;
+        $tieneMaterias = method_exists($this->model, 'tieneMaterias') ? $this->model->tieneMaterias($codigo) : false;
+
+        return !$tieneEstudiantes && !$tieneMaterias;
+    }
+
 }

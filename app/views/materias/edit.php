@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../../controllers/MateriaController.php';
 use App\Controllers\MateriaController;
+require_once __DIR__ . '/../../controllers/MateriaController.php';
 
 $codigo = $_GET['codigo'] ?? null;
 if (!$codigo) die("Código no proporcionado.");

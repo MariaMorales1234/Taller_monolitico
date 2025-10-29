@@ -70,4 +70,27 @@ class Programa
         $sql = "DELETE FROM {$this->table} WHERE codigo = ?";
         return $this->db->execSQL($sql, "s", $codigo);
     }
+
+    public function tieneEstudiantes($codigo)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM estudiantes WHERE programa_codigo = ?";
+        $result = $this->db->execSQL($sql, "s", $codigo);
+
+        if ($row = $result->fetch_assoc()) {
+            return $row['total'] > 0;
+        }
+        return false;
+    }
+
+    public function tieneMaterias($codigo)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM materias WHERE programa_codigo = ?";
+        $result = $this->db->execSQL($sql, "s", $codigo);
+
+        if ($row = $result->fetch_assoc()) {
+            return $row['total'] > 0;
+        }
+        return false;
+    }
+
 }

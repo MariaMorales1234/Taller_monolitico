@@ -1,9 +1,8 @@
 <?php
-require_once __DIR__ . '/../../controller/MateriaController.php';
-require_once __DIR__ . '/../../controller/ProgramaController.php';
-
 use App\Controllers\MateriaController;
 use App\Controllers\ProgramaController;
+require_once __DIR__ . '/../../controllers/MateriaController.php';
+require_once __DIR__ . '/../../controllers/ProgramaController.php';
 
 $programaController = new ProgramaController();
 $programas = $programaController->getAll(); // ✅ Método correcto

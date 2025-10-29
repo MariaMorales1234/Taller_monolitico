@@ -1,10 +1,9 @@
 <?php
+use App\Controllers\EstudianteController;
+use App\Controllers\MateriaController;
 require_once __DIR__ . '/../../controllers/NotaController.php';
 require_once __DIR__ . '/../../controllers/EstudianteController.php';
 require_once __DIR__ . '/../../controllers/MateriaController.php';
-
-use App\Controllers\EstudianteController;
-use App\Controllers\MateriaController;
 
 $estudianteController = new EstudianteController();
 $materiaController = new MateriaController();

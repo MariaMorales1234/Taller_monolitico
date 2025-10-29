@@ -1,8 +1,7 @@
 <?php
+use App\Models\Entities\Estudiante;
+require_once __DIR__ . '/../../models/entities/Estudiante.php';
 include_once __DIR__ . '/../../partials/header.php';
-
-use App\Model\Entities\Estudiante;
-require_once __DIR__ . '/../../model/entities/Estudiante.php';
 
 $codigo = $_GET['codigo'] ?? null;
 

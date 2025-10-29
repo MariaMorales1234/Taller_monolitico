@@ -1,8 +1,7 @@
 <?php
-include_once __DIR__ . '/../../partials/header.php';
-require_once __DIR__ . '/../../controller/ProgramaController.php'; // 🔹 corregida ruta (singular "controller")
-
 use App\Controllers\ProgramaController;
+include_once __DIR__ . '/../../partials/header.php';
+require_once __DIR__ . '/../../controllers/ProgramaController.php';
 
 $codigo = $_GET['codigo'] ?? null;
 if (!$codigo) {
