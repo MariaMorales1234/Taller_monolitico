@@ -1,5 +1,5 @@
 <?php
-namespace App\Models\Entites;
+namespace App\Models\Entities;
 
 use App\Model\Database\Database;
 
@@ -18,7 +18,7 @@ class Nota
     // 🔹 Obtener todas las notas con JOIN a estudiantes y materias
     public function obtenerTodas()
     {
-        $sql = "SELECT n.materia, n.estudiante, n.actividad, n.nota,
+        $sql = "SELECT n.id, n.materia, n.estudiante, n.nota,
                        e.nombre AS nombre_estudiante,
                        m.nombre AS nombre_materia
                 FROM {$this->table} n
@@ -28,62 +28,72 @@ class Nota
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    // 🔹 Obtener nota por actividad (clave principal)
-    public function obtenerPorActividad($actividad)
+    // Obtener nota por su ID
+    public function obtenerPorID($id)
     {
-        $sql = "SELECT * FROM {$this->table} WHERE actividad = ?";
-        $result = $this->db->execSQL($sql, "s", $actividad);
+        $sql = "SELECT n.id, n.materia, n.estudiante, n.nota,
+                        e.nombre AS nombre_ estudiante,
+                        m.nombre AS nombre_materia
+                FROM {$this->table} n
+                JOIN estudiantes e ON n.estudiante = e.codigo
+                JOIN materias m ON n.materia = m.codigo
+                WHERE n.id = ?";
+        $result = $this->db->execSQL($sql, "i", $id);
         return $result->fetch_assoc();
     }
 
-    // 🔹 Crear nueva nota
-    public function crear($estudiante, $materia, $actividad, $nota)
+    // Crear nueva nota
+    public function crear($materia, $estudiante, $nota)
     {
+        //Valida nota de 0 a 5, con 2 decimales
         if ($nota < 0 || $nota > 5) return false;
+        $nota = round($nota, 2);
 
-         $sql = "INSERT INTO {$this->table} (materia, estudiante, actividad, nota)
-            VALUES (?, ?, ?, ROUND(?, 2))";
-        return $this->db->execSQL($sql, "sssd", $materia, $estudiante, $actividad, $nota);
-    }
-
-
-    // 🔹 Actualizar nota por actividad
-    public function actualizar($actividad, $nota)
-    {
-        if ($nota < 0 || $nota > 5) return false;
-
-        $sql = "UPDATE {$this->table} SET nota = ? WHERE actividad = ?";
-        return $this->db->execSQL($sql, "ds", $nota, $actividad);
-    }
-
-    // 🔹 Eliminar nota por actividad
-    public function eliminar($actividad)
-    {
-        $sql = "DELETE FROM {$this->table} WHERE actividad = ?";
-        return $this->db->execSQL($sql, "s", $actividad);
-    }
-
-    // 🔹 Calcular promedio por materia
-    public function promedioPorMateria($materia)
-    {
-        $sql = "SELECT ROUND(AVG(nota), 2) AS promedio FROM {$this->table} WHERE materia = ?";
+        //Valida que exista materia
+        $sql = "SELECT COUNT(*) AS existe FROM materias WHERE codigo = ?";
         $result = $this->db->execSQL($sql, "s", $materia);
+        $row = $result->fetch_assoc();
+        if ($row['existe'] == 0) return false;
+
+        //Valida que exista estudiante
+        $sql = "SELECT COUNT(*) AS existe FROM estudiantes WHERE codigo = ?";
+        $result = $this->db->execSQL($sql, "s", $estudiante);
+        $row = $result->fetch_assoc();
+        if ($row['existe'] == 0) return false;
+
+        //Inserta la nota
+        $sql = "INSERT INTO {$this->table} (materia, estudiante, nota)
+                VALUES (?, ?, ?)";
+        return $this->db->execSQL($sql, "ssd", $materia, $estudiante, $nota);
+    }
+
+
+    // Actualizar nota por ID
+    public function actualizar($id, $nota)
+    {
+        if ($nota < 0 || $nota > 5) return false;
+        $nota = round($nota, 2);
+
+        $sql = "UPDATE {$this->table} SET nota = ? WHERE id = ?";
+        return $this->db->execSQL($sql, "di", $nota, $id);
+    }
+
+    // Eliminar nota por ID
+    public function eliminar($id)
+    {
+        $sql = "DELETE FROM {$this->table} WHERE id = ?";
+        return $this->db->execSQL($sql, "i", $id);
+    }
+
+    // Calcular promedio por materia
+    public function promedioPorMateria($materia, $estudiante)
+    {
+        $sql = "SELECT ROUND(AVG(nota), 2) AS promedio
+        FROM {$this->table}
+        WHERE materia = ? AND estudiante = ?";
+        $result = $this->db->execSQL($sql, "ss", $materia, $estudiante);
         $row = $result->fetch_assoc();
         return $row ? $row['promedio'] : 0;
     }
-
-    public function obtenerPorClave($materia, $estudiante, $actividad)
-    {
-        $sql = "SELECT n.materia, n.estudiante, n.actividad, n.nota,
-                   e.nombre AS nombre_estudiante,
-                   m.nombre AS nombre_materia
-                FROM notas n
-                JOIN estudiantes e ON n.estudiante = e.codigo
-                JOIN materias m ON n.materia = m.codigo
-                WHERE n.materia = ? AND n.estudiante = ? AND n.actividad = ?";
-        $result = $this->db->execSQL($sql, "sss", $materia, $estudiante, $actividad);
-        return $result->fetch_assoc();
-    }
-
 
 }
