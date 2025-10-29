@@ -2,31 +2,30 @@
 require_once __DIR__ . '/../../controller/NotaController.php';
 use App\Controller\NotaController;
 
-// Crear instancia del controlador
 $controller = new NotaController();
 
 // Validar que el formulario llegó por método POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Recuperar datos del formulario
-    $estudiante = $_POST['estudiante'] ?? null;
-    $materia    = $_POST['materia'] ?? null;
-    $actividad  = $_POST['actividad'] ?? null;
+    // Recuperar y limpiar los datos
+    $estudiante = trim($_POST['estudiante'] ?? '');
+    $materia    = trim($_POST['materia'] ?? '');
+    $actividad  = trim($_POST['actividad'] ?? '');
     $nota       = $_POST['nota'] ?? null;
 
     // Validaciones básicas
-    if (empty($estudiante) || empty($materia) || empty($actividad) || $nota === null) {
+    if ($estudiante === '' || $materia === '' || $actividad === '' || $nota === null) {
         echo "<script>alert('Todos los campos son obligatorios.'); window.history.back();</script>";
         exit;
     }
 
-    if ($nota < 0 || $nota > 5) {
+    if (!is_numeric($nota) || $nota < 0 || $nota > 5) {
         echo "<script>alert('La nota debe estar entre 0.00 y 5.00.'); window.history.back();</script>";
         exit;
     }
 
-    // Intentar guardar la nota
-    $ok = $controller->store($estudiante, $materia, $actividad, $nota);
+    // Guardar la nota
+    $ok = $controller->store($estudiante, $materia, $actividad, (float)$nota);
 
     if ($ok) {
         echo "<script>alert('Nota registrada correctamente.'); window.location.href='index.php';</script>";
@@ -37,4 +36,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     echo "<script>alert('Acceso no permitido.'); window.location.href='index.php';</script>";
 }
-?>
