@@ -1,7 +1,7 @@
 <?php
 namespace App\Controller;
 
-use App\Model\Entities\Materia;
+use App\Models\Entites\Materia;
 
 require_once __DIR__ . '/../model/entities/Materia.php';
 

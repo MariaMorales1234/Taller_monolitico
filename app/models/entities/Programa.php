@@ -1,4 +1,9 @@
 <?php
+
+namespace App\Models\Entites;
+
+use Database;
+
 require_once __DIR__ . '/../database/Database.php';
 
 class Programa
