@@ -64,4 +64,13 @@ class Estudiante
         $sql = "DELETE FROM {$this->table} WHERE codigo = ?";
         return $this->db->execSQL($sql, "s", $codigo);
     }
+
+    public function tieneNotas($codigo)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM notas WHERE estudiante = ?";
+        $result = $this->db->execSQL($sql, "s", $codigo);
+        $row = $result->fetch_assoc();
+        return $row['total'] > 0;
+    }
+
 }

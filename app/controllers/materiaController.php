@@ -1,8 +1,8 @@
 <?php
 namespace App\Controller;
 
-require_once __DIR__ . '/../model/entities/Materia.php';
 use App\Model\Entities\Materia;
+require_once __DIR__ . '/../model/entities/Materia.php';
 
 class MateriaController
 {
@@ -16,7 +16,7 @@ class MateriaController
     // Mostrar todas las materias
     public function index()
     {
-        $materias = $this->model->obtenerTodos();
+        $materias = $this->model->obtenerTodas();
         include __DIR__ . '/../view/materias/index.php';
     }
 
@@ -54,7 +54,7 @@ class MateriaController
     public function update()
     {
         if (!empty($_POST['codigo']) && !empty($_POST['nombre']) && !empty($_POST['programa'])) {
-            $this->model->actualizar($_POST['codigo'], $_POST['nombre'], $_POST['programa']);
+            $this->model->actualizar($_POST['codigo'], $_POST['nombre']);
             header("Location: index.php?controller=materia&action=index");
             exit;
         } else {
@@ -78,6 +78,11 @@ class MateriaController
     // Obtener todas las materias (para otras vistas o controladores)
     public function getAll()
     {
-        return $this->model->obtenerTodos();
+        return $this->model->obtenerTodas();
+    }
+
+    public function show($codigo)
+    {
+        return $this->model->obtenerPorCodigo($codigo);
     }
 }

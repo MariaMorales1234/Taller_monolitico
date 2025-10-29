@@ -1,8 +1,10 @@
 <?php
-namespace App\Controller;
+namespace App\Controllers;
+
+use App\Models\Entities\Nota;
 
 require_once __DIR__ . '/../models/entities/Nota.php';
-use App\Models\Entities\Nota;
+
 
 class NotaController
 {
@@ -16,7 +18,7 @@ class NotaController
     // Mostrar todas las notas
     public function index()
     {
-        $notas = $this->model->obtenerTodos();
+        $notas = $this->model->obtenerTodas();
         include __DIR__ . '/../views/notas/index.php';
     }
 
@@ -110,6 +112,6 @@ class NotaController
     // Obtener todas las notas (para otras vistas o controladores)
     public function getAll()
     {
-        return $this->model->obtenerTodos();
+        return $this->model->obtenerTodas();
     }
 }

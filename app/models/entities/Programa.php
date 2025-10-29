@@ -2,7 +2,7 @@
 
 namespace App\Model\Entities;
 
-use App\Model\Database\Database;
+use App\Models\Database\Database;
 
 require_once __DIR__ . '/../database/Database.php';
 

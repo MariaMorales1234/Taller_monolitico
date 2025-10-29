@@ -1,8 +1,9 @@
 <?php
-namespace App\Controller;
+namespace App\Controllers;
 
+use App\Model\Entities\Programa;
 require_once __DIR__ . '/../models/entities/Programa.php';
-use App\Models\Entities\Programa;
+
 
 class ProgramaController
 {

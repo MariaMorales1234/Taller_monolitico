@@ -2,8 +2,8 @@
 require_once __DIR__ . '/../../controller/MateriaController.php';
 require_once __DIR__ . '/../../controller/ProgramaController.php';
 
-use App\Controller\MateriaController;
-use App\Controller\ProgramaController;
+use App\Controllers\MateriaController;
+use App\Controllers\ProgramaController;
 
 $programaController = new ProgramaController();
 $programas = $programaController->getAll(); // ✅ Método correcto

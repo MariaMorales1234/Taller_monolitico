@@ -1,9 +1,9 @@
 <?php
-namespace App\Model\Entities;
+namespace App\Models\Entities;
 
-use App\Model\Database\Database;
+use App\Models\Database\Database;
 
-require_once __DIR__ . '/../database/Database.php';
+require_once __DIR__ . '/../Database/database.php';
 
 class Nota
 {
