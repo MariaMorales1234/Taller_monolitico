@@ -31,4 +31,19 @@ if (!$materia) {
 <body>
 <div class="container mt-4">
     <h2>Detalles de la Materia</h2>
-    <div
+    <div class="card mt-3">
+        <div class="card-body">
+            <p><strong>Código:</strong> <?= htmlspecialchars($materia['codigo']) ?></p>
+            <p><strong>Nombre:</strong> <?= htmlspecialchars($materia['nombre']) ?></p>
+            <p><strong>Programa:</strong> <?= htmlspecialchars($materia['programa']) ?></p>
+        </div>
+    </div>
+
+    <a href="edit.php?codigo=<?= urlencode($materia['codigo']) ?>" class="btn btn-warning mt-3">Editar</a>
+    <a href="../../index.php?controller=materia&action=delete&codigo=<?= urlencode($materia['codigo']) ?>"
+       class="btn btn-danger mt-3"
+       onclick="return confirm('¿Seguro que deseas eliminar esta materia?');">Eliminar</a>
+    <a href="index.php" class="btn btn-secondary mt-3">Volver</a>
+</div>
+</body>
+</html>

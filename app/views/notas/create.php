@@ -24,7 +24,7 @@ $materias = $materiaController->getAll();
 <div class="container mt-4">
     <h2>Registrar Nueva Nota</h2>
 
-    <form action="save.php" method="POST" class="needs-validation" novalidate>
+    <form action="../../index.php?controller=nota&action=store" method="POST" class="needs-validation" novalidate>
         <!-- Estudiante -->
         <div class="mb-3">
             <label for="estudiante" class="form-label">Estudiante</label>
@@ -51,13 +51,6 @@ $materias = $materiaController->getAll();
                 <?php endforeach; ?>
             </select>
             <div class="invalid-feedback">Debes seleccionar una materia.</div>
-        </div>
-
-        <!-- Actividad -->
-        <div class="mb-3">
-            <label for="actividad" class="form-label">Actividad</label>
-            <input type="text" class="form-control" id="actividad" name="actividad" required maxlength="50">
-            <div class="invalid-feedback">Debes ingresar una descripción de la actividad.</div>
         </div>
 
         <!-- Nota -->
