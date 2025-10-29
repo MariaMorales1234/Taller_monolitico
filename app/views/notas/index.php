@@ -1,9 +1,9 @@
 <?php
-require_once __DIR__ . '/../../controllers/NotaController.php';
+require_once __DIR__ . '/../../controller/NotaController.php'; // 🔹 Cambiado "controllers" → "controller"
 use App\Controller\NotaController;
 
 $controller = new NotaController();
-$notas = $controller->obtenerTodas(); // Usamos un método que retorne los registros
+$notas = $controller->obtenerTodas(); // Método que retorna todas las notas
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -38,9 +38,9 @@ $notas = $controller->obtenerTodas(); // Usamos un método que retorne los regis
                     <td><?= htmlspecialchars($nota['actividad']) ?></td>
                     <td><?= number_format($nota['nota'], 2) ?></td>
                     <td>
-                        <a href="edit.php?materia=<?= urlencode($nota['materia']) ?>&estudiante=<?= urlencode($nota['estudiante']) ?>" class="btn btn-sm btn-warning">Editar</a>
-                        <a href="show.php?materia=<?= urlencode($nota['materia']) ?>&estudiante=<?= urlencode($nota['estudiante']) ?>" class="btn btn-sm btn-info">Ver</a>
-                        <a href="delete.php?materia=<?= urlencode($nota['materia']) ?>&estudiante=<?= urlencode($nota['estudiante']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta nota? Esta acción no se puede deshacer.');">Eliminar</a>
+                        <a href="edit.php?materia=<?= urlencode($nota['materia']) ?>&estudiante=<?= urlencode($nota['estudiante']) ?>&actividad=<?= urlencode($nota['actividad']) ?>" class="btn btn-sm btn-warning">Editar</a>
+                        <a href="show.php?materia=<?= urlencode($nota['materia']) ?>&estudiante=<?= urlencode($nota['estudiante']) ?>&actividad=<?= urlencode($nota['actividad']) ?>" class="btn btn-sm btn-info">Ver</a>
+                        <a href="delete.php?materia=<?= urlencode($nota['materia']) ?>&estudiante=<?= urlencode($nota['estudiante']) ?>&actividad=<?= urlencode($nota['actividad']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta nota? Esta acción no se puede deshacer.');">Eliminar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
