@@ -1,8 +1,7 @@
 <?php
-
 namespace App\Models\Entites;
 
-use Database;
+use App\Model\Database\Database;
 
 require_once __DIR__ . '/../database/Database.php';
 
@@ -16,52 +15,75 @@ class Nota
         $this->db = new Database();
     }
 
+    // 🔹 Obtener todas las notas con JOIN a estudiantes y materias
     public function obtenerTodas()
     {
-        $sql = "SELECT n.id, e.nombre AS estudiante, m.nombre AS materia, n.nota
+        $sql = "SELECT n.materia, n.estudiante, n.actividad, n.nota,
+                       e.nombre AS nombre_estudiante,
+                       m.nombre AS nombre_materia
                 FROM {$this->table} n
-                JOIN estudiantes e ON n.estudiante_id = e.id
-                JOIN materias m ON n.materia_id = m.id";
+                INNER JOIN estudiantes e ON n.estudiante = e.codigo
+                INNER JOIN materias m ON n.materia = m.codigo";
         $result = $this->db->execSQL($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function obtenerPorId($id)
+    // 🔹 Obtener nota por actividad (clave principal)
+    public function obtenerPorActividad($actividad)
     {
-        $sql = "SELECT * FROM {$this->table} WHERE id = ?";
-        $result = $this->db->execSQL($sql, "i", $id);
+        $sql = "SELECT * FROM {$this->table} WHERE actividad = ?";
+        $result = $this->db->execSQL($sql, "s", $actividad);
         return $result->fetch_assoc();
     }
 
-    public function crear($estudiante_id, $materia_id, $nota)
+    // 🔹 Crear nueva nota
+    public function crear($estudiante, $materia, $actividad, $nota)
     {
         if ($nota < 0 || $nota > 5) return false;
 
-        $sql = "INSERT INTO {$this->table} (estudiante_id, materia_id, nota)
-                VALUES (?, ?, ROUND(?, 2))";
-        return $this->db->execSQL($sql, "iid", $estudiante_id, $materia_id, $nota);
+         $sql = "INSERT INTO {$this->table} (materia, estudiante, actividad, nota)
+            VALUES (?, ?, ?, ROUND(?, 2))";
+        return $this->db->execSQL($sql, "sssd", $materia, $estudiante, $actividad, $nota);
     }
 
-    public function actualizar($id, $nota)
+
+    // 🔹 Actualizar nota por actividad
+    public function actualizar($actividad, $nota)
     {
         if ($nota < 0 || $nota > 5) return false;
 
-        $sql = "UPDATE {$this->table} SET nota = ROUND(?, 2) WHERE id = ?";
-        return $this->db->execSQL($sql, "di", $nota, $id);
+        $sql = "UPDATE {$this->table} SET nota = ? WHERE actividad = ?";
+        return $this->db->execSQL($sql, "ds", $nota, $actividad);
     }
 
-    public function eliminar($id)
+    // 🔹 Eliminar nota por actividad
+    public function eliminar($actividad)
     {
-        $sql = "DELETE FROM {$this->table} WHERE id = ?";
-        return $this->db->execSQL($sql, "i", $id);
+        $sql = "DELETE FROM {$this->table} WHERE actividad = ?";
+        return $this->db->execSQL($sql, "s", $actividad);
     }
 
-    // Promedio por materia
-    public function promedioPorMateria($materia_id)
+    // 🔹 Calcular promedio por materia
+    public function promedioPorMateria($materia)
     {
-        $sql = "SELECT ROUND(AVG(nota), 2) AS promedio FROM {$this->table} WHERE materia_id = ?";
-        $result = $this->db->execSQL($sql, "i", $materia_id);
+        $sql = "SELECT ROUND(AVG(nota), 2) AS promedio FROM {$this->table} WHERE materia = ?";
+        $result = $this->db->execSQL($sql, "s", $materia);
         $row = $result->fetch_assoc();
         return $row ? $row['promedio'] : 0;
     }
+
+    public function obtenerPorClave($materia, $estudiante, $actividad)
+    {
+        $sql = "SELECT n.materia, n.estudiante, n.actividad, n.nota,
+                   e.nombre AS nombre_estudiante,
+                   m.nombre AS nombre_materia
+                FROM notas n
+                JOIN estudiantes e ON n.estudiante = e.codigo
+                JOIN materias m ON n.materia = m.codigo
+                WHERE n.materia = ? AND n.estudiante = ? AND n.actividad = ?";
+        $result = $this->db->execSQL($sql, "sss", $materia, $estudiante, $actividad);
+        return $result->fetch_assoc();
+    }
+
+
 }

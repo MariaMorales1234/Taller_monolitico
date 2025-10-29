@@ -1,10 +1,9 @@
 <?php
-
-namespace App\Models\Entites;
-
-use Database;
+namespace App\Model\Entities;
 
 require_once __DIR__ . '/../database/Database.php';
+
+use App\Model\Database\Database;
 
 class Materia
 {
@@ -39,7 +38,6 @@ class Materia
         return $this->db->execSQL($sql, "ssi", $codigo, $nombre, $programa_id);
     }
 
-    // Solo se puede modificar si no tiene notas o estudiantes
     public function actualizar($codigo, $nombre)
     {
         $sqlCheck = "SELECT COUNT(*) AS total FROM notas 
@@ -51,7 +49,6 @@ class Materia
         return $this->db->execSQL($sql, "ss", $nombre, $codigo);
     }
 
-    // Solo se puede eliminar si no tiene notas o estudiantes
     public function eliminar($codigo)
     {
         $sqlCheck = "SELECT COUNT(*) AS total FROM notas 

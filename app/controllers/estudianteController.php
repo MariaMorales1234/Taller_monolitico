@@ -75,4 +75,9 @@ class EstudianteController
             echo "No se especificó el estudiante a eliminar.";
         }
     }
+
+    public function getAll() {
+        return $this->model->obtenerTodos();
+    }
+
 }

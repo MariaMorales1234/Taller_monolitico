@@ -1,11 +1,19 @@
 <?php
-include_once __DIR__ . '/../../partials/header.php';
-require_once __DIR__ . '/../../controllers/MateriaController.php';
+require_once __DIR__ . '/../../controller/MateriaController.php';
+use App\Controller\MateriaController;
 
 $controller = new MateriaController();
-$materias = $controller->getAll(); // Obtenemos todas las materias
+$materias = $controller->getAll();
 ?>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Materias</title>
+    <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
+</head>
+<body>
 <div class="container mt-4">
     <h2>Materias Registradas</h2>
     <a href="create.php" class="btn btn-primary mb-3">+ Nueva Materia</a>
@@ -13,31 +21,30 @@ $materias = $controller->getAll(); // Obtenemos todas las materias
     <?php if (empty($materias)): ?>
         <div class="alert alert-info">No hay materias registradas.</div>
     <?php else: ?>
-    <table class="table table-striped table-bordered">
+    <table class="table table-bordered">
         <thead>
-        <tr>
-            <th>Código</th>
-            <th>Nombre</th>
-            <th>Programa</th>
-            <th>Acciones</th>
-        </tr>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Programa</th>
+                <th>Acciones</th>
+            </tr>
         </thead>
         <tbody>
         <?php foreach ($materias as $materia): ?>
             <tr>
-            <td><?= htmlspecialchars($materia['codigo']) ?></td>
-            <td><?= htmlspecialchars($materia['nombre']) ?></td>
-            <td><?= htmlspecialchars($materia['programa']) ?></td>
-            <td>
-        <a href="edit.php?codigo=<?= urlencode($materia['codigo']) ?>" class="btn btn-sm btn-warning">Editar</a>
-        <a href="show.php?codigo=<?= urlencode($materia['codigo']) ?>" class="btn btn-sm btn-info">Ver</a>
-        <a href="delete.php?codigo=<?= urlencode($materia['codigo']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta materia? Esta acción no se puede deshacer.');">Eliminar</a>
-    </td>
-    </tr>
-    <?php endforeach; ?>
-    </tbody>
+                <td><?= htmlspecialchars($materia['codigo']) ?></td>
+                <td><?= htmlspecialchars($materia['nombre']) ?></td>
+                <td><?= htmlspecialchars($materia['programa']) ?></td>
+                <td>
+                    <a href="edit.php?codigo=<?= urlencode($materia['codigo']) ?>" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="delete.php?codigo=<?= urlencode($materia['codigo']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar materia?');">Eliminar</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
     </table>
     <?php endif; ?>
 </div>
-
-<?php include_once __DIR__ . '/../../partials/footer.php'; ?>
+</body>
+</html>

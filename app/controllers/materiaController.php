@@ -1,9 +1,8 @@
 <?php
 namespace App\Controller;
 
-use App\Models\Entites\Materia;
-
 require_once __DIR__ . '/../model/entities/Materia.php';
+use App\Model\Entities\Materia;
 
 class MateriaController
 {
@@ -27,14 +26,15 @@ class MateriaController
 
     public function store()
     {
-        if (!empty($_POST['codigo']) && !empty($_POST['nombre']) && !empty($_POST['programa_id'])) {
-            $this->model->crear($_POST['codigo'], $_POST['nombre'], $_POST['programa_id']);
+        if (!empty($_POST['codigo']) && !empty($_POST['nombre']) && !empty($_POST['programa'])) {
+            $this->model->crear($_POST['codigo'], $_POST['nombre'], $_POST['programa']);
             header("Location: index.php?controller=materia&action=index");
             exit;
         } else {
-            echo "⚠️ Todos los campos son obligatorios.";
+            echo "Todos los campos son obligatorios.";
         }
     }
+
 
     public function edit()
     {
@@ -54,7 +54,7 @@ class MateriaController
             header("Location: index.php?controller=materia&action=index");
             exit;
         } else {
-            echo "⚠️ Datos incompletos.";
+            echo "Datos incompletos.";
         }
     }
 
@@ -68,5 +68,16 @@ class MateriaController
         } else {
             echo "No se especificó la materia a eliminar.";
         }
+    }
+
+    // Método adicional para vistas directas (show)
+    public function show($codigo)
+    {
+        return $this->model->obtenerPorCodigo($codigo);
+    }
+
+    public function getAll()
+    {
+    return $this->model->obtenerTodas();
     }
 }

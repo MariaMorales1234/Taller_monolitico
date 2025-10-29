@@ -1,6 +1,5 @@
 <?php
-// No hay namespace porque el proyecto no usa Composer
-// y se incluirá manualmente con require_once
+namespace App\Model\Database;
 
 use mysqli;
 use Exception;
