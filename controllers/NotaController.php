@@ -1,126 +1,87 @@
 <?php
-namespace App\Controllers;
-
-use App\Models\Entities\Nota;
-
-require_once __DIR__ . '/../models/entities/Nota.php';
+require_once '../models/Nota.php';
+require_once '../models/Estudiante.php';
+require_once '../models/Materia.php';
 
 
 class NotaController
 {
     private $model;
+    private $estudianteModel;
+    private $materiaModel;
 
     public function __construct()
     {
         $this->model = new Nota();
+        $this->estudianteModel = new Estudiante();
+        $this->materiaModel = new Materia();
     }
 
     public function index()
     {
-        $notas = $this->model->obtenerTodas();
-        include __DIR__ . '/../views/notas/index.php';
+        $notas = $this->model->getAll();
+        include '../views/nota/listar.php';
     }
 
     public function create()
     {
-        include __DIR__ . '/../views/notas/create.php';
-    }
-
-    public function store()
-    {
-        if (
-            !empty($_POST['materia_id']) &&
-            !empty($_POST['estudiante_id']) &&
-            isset($_POST['nota'])
-        ) {
-            $resultado = $this->model->crear(
-                $_POST['materia_id'],
-                $_POST['estudiante_id'],
-                $_POST['nota']
-            );
-
-            if ($resultado) {
+        $estudiantes = $this->estudianteModel->getAll();
+        $materias = $this->materiaModel->getAll();
+        if ($_SERVER['REQUEST-METHOD'] == 'POST') {
+            $estudiante = $_POST['estudiante'];
+            $materia = $_POST['materia'];
+            $actividad = trim($_POST['actividad']);
+            $nota = floatval($_POST['nota']);
+            if (empty($estudiante) || empty($meteria) || empty ($actividad) || $nota <0 || $nota >5) {
+                echo "Todos los campos son obligatorios y la nota debe estar entre 0 y 5.";
+                return;
+            }
+            if ($this->model->create($estudiante, $materia, $actividad, $nota)) {
                 header("Location: index.php?controller=nota&action=index");
-                exit;
             } else {
-                echo "Error al crear la nota. Verifique que la materia y el estudiante existan, y que la nota sea válida.";
+                echo "Error al crear la nota. Verifica que la materia esté en el programa del estudiante.";
             }
         } else {
-            echo "Todos los campos son obligatorios.";
-        }
-        return null;
-    }
-
-    public function edit()
-    {
-        $id = $_GET['id'] ?? null;
-        if ($id) {
-            $nota = $this->model->obtenerPorId($id);
-            if ($nota) {
-                include __DIR__ . '/../views/notas/edit.php';
-            } else {
-                echo "No se encontró la nota.";
-            }
-        } else {
-            echo "Falta el parámetro ID.";
+            include "../views/nota/crear.php";
         }
     }
 
-    public function update()
+    public function edit($id)
     {
-        if (!empty($_POST['id']) && isset($_POST['nota'])) {
-            $resultado = $this->model->actualizar($_POST['id'], $_POST['nota']);
-            if ($resultado) {
+        if ($_SERVER['REQUEST-METHOD'] == 'POST') {
+            $nota = floatval($_POST['nota']);
+            if ($nota < 0 || $nota > 5) {
+                echo "La nota debe estar entre 0 y 5.";
+                return;
+            } if ($this->model->update($id, $nota)) {
                 header("Location: index.php?controller=nota&action=index");
-                exit;
             } else {
-                echo "No se pudo actualizar la nota.";
+                echo "Error al actualizar la nota.";
             }
         } else {
-            echo "Datos incompletos.";
+            $nota = $this->model->getById($id);
+            if (!$nota) {
+                echo "Nota no encontrada.";
+                return;
+            }
+            include "../views/nota/editar.php";
         }
     }
 
-    public function delete()
+    public function delete($id)
     {
-        $id = $_GET['id'] ?? null;
-        if ($id) {
-            $this->model->eliminar($id);
-            header("Location: index.php?controller=nota&action=index");
-            exit;
-        } else {
-            echo "No se especificó la nota a eliminar.";
-        }
-    }
-
-    public function promedio()
-    {
-        if (!empty($_GET['materia_id']) && !empty($_GET['estudiante_id'])) {
-            $promedio = $this->model->promedioPorMateria($_GET['materia_id'], $_GET['estudiante_id']);
-            echo "Promedio del estudiante en la materia: " . $promedio;
-        } else {
-            echo "Faltan parámetros para calcular el promedio.";
-        }
-    }
-
-    public function getAll()
-    {
-        return $this->model->obtenerTodas();
-    }
-
-    public function show($id)
-    {
-        $id = $_GET['id'] ?? null;
-        if ($id) {
-            $nota = $this->model->obtenerPorId($id);
-            if ($nota) {
-                include __DIR__ . '/../views/notas/show.php';
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($_POST["confirm"]) && $_POST["confirm"] == "yes") {
+                if ($this->model->delete($id)) {
+                    header("Location: index.php?controller=nota&action=index");
+                } else {
+                    echo "Error al eliminar la nota.";
+                }
             } else {
-                echo "No se encontró la nota.";
+                header("Location: index.php?controller=nota&action=index");
             }
         } else {
-            echo "Falta el parámetro ID.";
+            include "../views/nota/eliminar.php";
         }
-        return null;
-    }
+    } 
 }
