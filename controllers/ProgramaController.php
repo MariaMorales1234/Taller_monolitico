@@ -1,98 +1,77 @@
 <?php
-namespace App\Controllers;
+require_once '../models/Programa.php';
 
-use App\Model\Entities\Programa;
-require_once __DIR__ . '/../models/entities/Programa.php';
-
-
-class ProgramaController
-{
+class ProgramaController {
     private $model;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->model = new Programa();
     }
 
-    public function index()
-    {
-        $programas = $this->model->obtenerTodos();
-        include __DIR__ . '/../views/programas/index.php';
+    // Acción para listar todos los programas
+    public function index() {
+        $programas = $this->model->getAll();
+        include '../views/programa/listar.php';
     }
 
-    public function create()
-    {
-        include __DIR__ . '/../views/programas/create.php';
-    }
-
-    public function store()
-    {
-        if (!empty($_POST['codigo']) && !empty($_POST['nombre'])) {
-            $this->model->crear($_POST['codigo'], $_POST['nombre']);
-            header("Location: index.php?controller=programa&action=index");
-            exit;
+    // Acción para mostrar el formulario de creación
+    public function create() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            
+            $codigo = trim($_POST['codigo']);
+            $nombre = trim($_POST['nombre']);
+            if (empty($codigo) || empty($nombre)) {
+                echo "Código y nombre son obligatorios.";
+                return;
+            }
+            if ($this->model->create($codigo, $nombre)) {
+                header('Location: index.php?controller=programa&action=index');
+            } else {
+                echo "Error al crear el programa.";
+            }
         } else {
-            echo "Todos los campos son obligatorios.";
+            include '../views/programa/crear.php';
         }
     }
 
-    public function edit()
-    {
-        $codigo = $_GET['codigo'] ?? null;
-        if ($codigo) {
-            $programa = $this->model->obtenerPorCodigo($codigo);
-            include __DIR__ . '/../views/programas/edit.php';
+    // Acción para mostrar el formulario de edición
+    public function edit($codigo) {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $nombre = trim($_POST['nombre']);
+            if (empty($nombre)) {
+                echo "El nombre es obligatorio.";
+                return;
+            }
+            if ($this->model->update($codigo, $nombre)) {
+                header('Location: index.php?controller=programa&action=index');
+            } else {
+                echo "No se puede modificar (tiene estudiantes o materias relacionadas).";
+            }
         } else {
-            echo "No se encontró el programa.";
+            $programa = $this->model->getById($codigo);
+            if (!$programa) {
+                echo "Programa no encontrado.";
+                return;
+            }
+            include '../views/programa/editar.php';
         }
     }
 
-    public function update()
-    {
-        if (!empty($_POST['codigo']) && !empty($_POST['nombre'])) {
-            $this->model->actualizar($_POST['codigo'], $_POST['nombre']);
-            header("Location: index.php?controller=programa&action=index");
-            exit;
+    // Acción para confirmar y eliminar
+    public function delete($codigo) {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['confirm']) && $_POST['confirm'] == 'yes') {
+                if ($this->model->delete($codigo)) {
+                    header('Location: index.php?controller=programa&action=index');
+                } else {
+                    echo "No se puede eliminar (tiene estudiantes o materias relacionadas).";
+                }
+            } else {
+                header('Location: index.php?controller=programa&action=index');
+            }
         } else {
-            echo "Datos incompletos.";
+            include '../views/programa/eliminar.php';
         }
     }
-
-    public function delete()
-    {
-        $codigo = $_GET['codigo'] ?? null;
-        if ($codigo) {
-            $this->model->eliminar($codigo);
-            header("Location: index.php?controller=programa&action=index");
-            exit;
-        } else {
-            echo "No se especificó el programa a eliminar.";
-        }
-    }
-
-    public function getAll()
-    {
-        return $this->model->obtenerTodos();
-    }
-
-    public function show($codigo)
-    {
-        if (!$codigo) {
-            return null;
-        }
-        return $this->model->obtenerPorCodigo($codigo);
-    }
-
-    public function canUpdate($codigo)
-    {
-        if (!$codigo) {
-            return false;
-        }
-
-        $tieneEstudiantes = method_exists($this->model, 'tieneEstudiantes') ? $this->model->tieneEstudiantes($codigo) : false;
-        $tieneMaterias = method_exists($this->model, 'tieneMaterias') ? $this->model->tieneMaterias($codigo) : false;
-
-        return !$tieneEstudiantes && !$tieneMaterias;
-    }
-
 }
+?>
