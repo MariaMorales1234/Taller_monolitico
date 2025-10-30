@@ -1,12 +1,10 @@
 <?php
 use App\Controllers\EstudianteController;
-include_once __DIR__ . '/../../partials/header.php';
 require_once __DIR__ . '/../../controllers/EstudianteController.php';
-
 $controller = new EstudianteController();
 $estudiantes = $controller->getAll(); 
 ?>
-
+<link rel="stylesheet" href="../../public/index.css">
 <div class="container mt-4">
     <h2>Gestión de Estudiantes</h2>
 
