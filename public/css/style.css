@@ -181,6 +181,7 @@ a.btn-action {
     font-size: 14px;
     margin-right: 10px;
     transition: all 0.3s;
+    text-decoration: none !important;
 }
 
 a.btn-action:hover {

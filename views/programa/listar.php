@@ -1,6 +1,8 @@
 <?php
 $content = '<h1>Programas de Formación</h1>
-<a href="index.php?controller=programa&action=create">Crear Nuevo Programa</a>
+<div style="text-align:center, margin-botton:25px">
+    <a href="index.php?controller=programa&action=create" class="btn" style="text-decoration:none">+ Crear Nuevo Programa</a>
+</div>
 <table border="1">
 <tr>
 <th>Código</th>
