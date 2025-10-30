@@ -17,7 +17,6 @@ class ProgramaController {
     // Acción para mostrar el formulario de creación
     public function create() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            
             $codigo = trim($_POST['codigo']);
             $nombre = trim($_POST['nombre']);
             if (empty($codigo) || empty($nombre)) {
@@ -39,13 +38,13 @@ class ProgramaController {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $nombre = trim($_POST['nombre']);
             if (empty($nombre)) {
-                echo "El nombre es obligatorio.";
+                echo "El nombre del programa es obligatorio.";
                 return;
             }
             if ($this->model->update($codigo, $nombre)) {
                 header('Location: index.php?controller=programa&action=index');
             } else {
-                echo "No se puede modificar (tiene estudiantes o materias relacionadas).";
+                echo "No se puede modificar, ya que tiene estudiantes o materias relacionadas.";
             }
         } else {
             $programa = $this->model->getById($codigo);
@@ -64,7 +63,7 @@ class ProgramaController {
                 if ($this->model->delete($codigo)) {
                     header('Location: index.php?controller=programa&action=index');
                 } else {
-                    echo "No se puede eliminar (tiene estudiantes o materias relacionadas).";
+                    echo "No se puede eliminar, ya que tiene estudiantes o materias relacionadas.";
                 }
             } else {
                 header('Location: index.php?controller=programa&action=index');
@@ -74,4 +73,3 @@ class ProgramaController {
         }
     }
 }
-?>

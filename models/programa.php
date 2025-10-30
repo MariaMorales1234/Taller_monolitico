@@ -25,7 +25,7 @@ class Programa {
     }
 
     public function update($codigo, $nombre) {
-        // Verificar si tiene estudiantes o materias relacionadas
+        // Primero hay que verificar si tiene estudiantes o materias relacionadas
         $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM estudiantes WHERE programa = ? UNION SELECT COUNT(*) FROM materias WHERE programa = ?");
         $stmt->execute([$codigo, $codigo]);
         $counts = $stmt->fetchAll(PDO::FETCH_COLUMN);
@@ -35,7 +35,7 @@ class Programa {
     }
 
     public function delete($codigo) {
-        // Verificar si tiene estudiantes o materias relacionadas
+        // Primero hay que verificar si tiene estudiantes o materias relacionadas
         $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM estudiantes WHERE programa = ? UNION SELECT COUNT(*) FROM materias WHERE programa = ?");
         $stmt->execute([$codigo, $codigo]);
         $counts = $stmt->fetchAll(PDO::FETCH_COLUMN);
@@ -44,4 +44,3 @@ class Programa {
         return $stmt->execute([$codigo]);
     }
 }
-?>

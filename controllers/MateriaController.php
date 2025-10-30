@@ -1,6 +1,6 @@
 <?php
 require_once '../models/Materia.php';
-require_once '../models/Programa.php';  // Para listar programas en formularios
+require_once '../models/Programa.php';  // Para poder usar listar programas en los formularios
 
 class MateriaController {
     private $model;
@@ -48,7 +48,7 @@ class MateriaController {
             if ($this->model->update($codigo, $nombre, $programa)) {
                 header('Location: index.php?controller=materia&action=index');
             } else {
-                echo "No se puede modificar (tiene notas registradas).";
+                echo "No se puede modificar, ya que tiene notas registradas.";
             }
         } else {
             $materia = $this->model->getById($codigo);
@@ -66,7 +66,7 @@ class MateriaController {
                 if ($this->model->delete($codigo)) {
                     header('Location: index.php?controller=materia&action=index');
                 } else {
-                    echo "No se puede eliminar (tiene notas registradas).";
+                    echo "No se puede eliminar ya que tiene notas registradas.";
                 }
             } else {
                 header('Location: index.php?controller=materia&action=index');
@@ -76,4 +76,3 @@ class MateriaController {
         }
     }
 }
-?>
