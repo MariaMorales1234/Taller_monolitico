@@ -1,81 +1,79 @@
 <?php
-namespace App\Controllers;
+require_once '../models/Materia.php';
+require_once '../models/Programa.php';  // Para listar programas en formularios
 
-use App\Model\Entities\Materia;
-require_once __DIR__ . '/../model/entities/Materia.php';
-
-class MateriaController
-{
+class MateriaController {
     private $model;
+    private $programaModel;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->model = new Materia();
+        $this->programaModel = new Programa();
     }
 
-    public function index()
-    {
-        $materias = $this->model->obtenerTodas();
-        include __DIR__ . '/../view/materias/index.php';
+    public function index() {
+        $materias = $this->model->getAll();
+        include '../views/materia/listar.php';
     }
 
-    public function create()
-    {
-        include __DIR__ . '/../view/materias/create.php';
-    }
-
-    public function store()
-    {
-        if (!empty($_POST['codigo']) && !empty($_POST['nombre']) && !empty($_POST['programa'])) {
-            $this->model->crear($_POST['codigo'], $_POST['nombre'], $_POST['programa']);
-            header("Location: index.php?controller=materia&action=index");
-            exit;
+    public function create() {
+        $programas = $this->programaModel->getAll();  
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $codigo = trim($_POST['codigo']);
+            $nombre = trim($_POST['nombre']);
+            $programa = $_POST['programa'];
+            if (empty($codigo) || empty($nombre) || empty($programa)) {
+                echo "Todos los campos son obligatorios.";
+                return;
+            }
+            if ($this->model->create($codigo, $nombre, $programa)) {
+                header('Location: index.php?controller=materia&action=index');
+            } else {
+                echo "Error al crear la materia.";
+            }
         } else {
-            echo "Todos los campos son obligatorios.";
+            include '../views/materia/crear.php';
         }
     }
 
-    public function edit()
-    {
-        $codigo = $_GET['codigo'] ?? null;
-        if ($codigo) {
-            $materia = $this->model->obtenerPorCodigo($codigo);
-            include __DIR__ . '/../view/materias/edit.php';
+    public function edit($codigo) {
+        $programas = $this->programaModel->getAll();
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $nombre = trim($_POST['nombre']);
+            $programa = $_POST['programa'];
+            if (empty($nombre) || empty($programa)) {
+                echo "Nombre y programa son obligatorios.";
+                return;
+            }
+            if ($this->model->update($codigo, $nombre, $programa)) {
+                header('Location: index.php?controller=materia&action=index');
+            } else {
+                echo "No se puede modificar (tiene notas registradas).";
+            }
         } else {
-            echo "No se encontró la materia.";
+            $materia = $this->model->getById($codigo);
+            if (!$materia) {
+                echo "Materia no encontrada.";
+                return;
+            }
+            include '../views/materia/editar.php';
         }
     }
 
-    public function update()
-    {
-        if (!empty($_POST['codigo']) && !empty($_POST['nombre']) && !empty($_POST['programa'])) {
-            $this->model->actualizar($_POST['codigo'], $_POST['nombre']);
-            header("Location: index.php?controller=materia&action=index");
-            exit;
+    public function delete($codigo) {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['confirm']) && $_POST['confirm'] == 'yes') {
+                if ($this->model->delete($codigo)) {
+                    header('Location: index.php?controller=materia&action=index');
+                } else {
+                    echo "No se puede eliminar (tiene notas registradas).";
+                }
+            } else {
+                header('Location: index.php?controller=materia&action=index');
+            }
         } else {
-            echo "Datos incompletos.";
+            include '../views/materia/eliminar.php';
         }
-    }
-
-    public function delete()
-    {
-        $codigo = $_GET['codigo'] ?? null;
-        if ($codigo) {
-            $this->model->eliminar($codigo);
-            header("Location: index.php?controller=materia&action=index");
-            exit;
-        } else {
-            echo "No se especificó la materia a eliminar.";
-        }
-    }
-
-    public function getAll()
-    {
-        return $this->model->obtenerTodas();
-    }
-
-    public function show($codigo)
-    {
-        return $this->model->obtenerPorCodigo($codigo);
     }
 }
+?>

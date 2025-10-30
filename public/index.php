@@ -1,13 +1,11 @@
 <?php
-// Activar reporte de errores para desarrollo
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Obtener parámetros de la URL
 $controller = $_GET['controller'] ?? 'programa';
 $action = $_GET['action'] ?? 'index';
-$id = $_GET['id'] ?? null;  // Cambiado de $codigo a $id para notas
-$codigo = $_GET['codigo'] ?? null;  // Mantén $codigo para otros módulos
+$id = $_GET['id'] ?? null;  
+$codigo = $_GET['codigo'] ?? null;  
 
 // Ruta al controlador
 $controllerFile = "../controllers/{$controller}Controller.php";
