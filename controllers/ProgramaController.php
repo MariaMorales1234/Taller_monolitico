@@ -8,13 +8,11 @@ class ProgramaController {
         $this->model = new Programa();
     }
 
-    // Acción para listar todos los programas
     public function index() {
         $programas = $this->model->getAll();
         include '../views/programa/listar.php';
     }
 
-    // Acción para mostrar el formulario de creación
     public function create() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $codigo = trim($_POST['codigo']);
@@ -33,7 +31,6 @@ class ProgramaController {
         }
     }
 
-    // Acción para mostrar el formulario de edición
     public function edit($codigo) {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $nombre = trim($_POST['nombre']);
@@ -56,7 +53,6 @@ class ProgramaController {
         }
     }
 
-    // Acción para confirmar y eliminar
     public function delete($codigo) {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['confirm']) && $_POST['confirm'] == 'yes') {

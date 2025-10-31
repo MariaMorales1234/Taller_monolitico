@@ -19,7 +19,13 @@
     </nav>
     <div class="main">
         <div class="container">
-            <?php echo $content; ?>
+            <?php
+                if (isset($content) && !empty($content)) {
+                    echo $content;
+                } else {
+                    echo '<p>Haga click en uno de los botones del menu para empezar a hacer consultas</p>';
+                }
+            ?>
         </div>
     </div>
     <div class="footer">

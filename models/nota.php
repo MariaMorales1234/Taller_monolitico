@@ -20,9 +20,7 @@ class Nota {
     }
 
     public function create ($estudiante, $materia, $actividad, $nota) {
-        // Validar nota
         if ($nota < 0 || $nota > 5) return false;
-        // Verificar que la materia esté en el programa del estudiante
         $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM estudiantes e JOIN materias m ON e.programa = m.programa WHERE e.codigo = ? AND m.codigo = ?");
         $stmt->execute([$estudiante, $materia]);
         if ($stmt->fetchColumn() == 0) return false;

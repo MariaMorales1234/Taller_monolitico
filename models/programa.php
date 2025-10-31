@@ -25,21 +25,19 @@ class Programa {
     }
 
     public function update($codigo, $nombre) {
-        // Primero hay que verificar si tiene estudiantes o materias relacionadas
         $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM estudiantes WHERE programa = ? UNION SELECT COUNT(*) FROM materias WHERE programa = ?");
         $stmt->execute([$codigo, $codigo]);
         $counts = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        if ($counts[0] > 0 || $counts[1] > 0) return false;  // No se puede modificar
+        if ($counts[0] > 0 || $counts[1] > 0) return false; 
         $stmt = $this->pdo->prepare("UPDATE programas SET nombre = ? WHERE codigo = ?");
         return $stmt->execute([$nombre, $codigo]);
     }
 
     public function delete($codigo) {
-        // Primero hay que verificar si tiene estudiantes o materias relacionadas
         $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM estudiantes WHERE programa = ? UNION SELECT COUNT(*) FROM materias WHERE programa = ?");
         $stmt->execute([$codigo, $codigo]);
         $counts = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        if ($counts[0] > 0 || $counts[1] > 0) return false;  // No se puede eliminar
+        if ($counts[0] > 0 || $counts[1] > 0) return false;  
         $stmt = $this->pdo->prepare("DELETE FROM programas WHERE codigo = ?");
         return $stmt->execute([$codigo]);
     }

@@ -1,6 +1,6 @@
 <?php
 require_once '../models/Estudiante.php';
-require_once '../models/Programa.php';  // Para listar programas en formularios
+require_once '../models/Programa.php'; 
 
 class EstudianteController {
     private $model;

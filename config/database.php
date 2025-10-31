@@ -4,10 +4,9 @@ class Database {
     private $pdo;
 
     private function __construct() {
-        // Configuración de la conexión
-        $host = 'localhost';  // Cambia si tu servidor MySQL no está en localhost
+        $host = 'localhost';  
         $db = 'notas';    // Nombre de la base de datos como aparezca en phpmyadmin
-        $user = 'root';       // Usuario de MySQL (por defecto en XAMPP)
+        $user = 'root';   
         $pass = '12345*QWE';  // Contraseña de mysql
         
         try {
@@ -19,8 +18,7 @@ class Database {
             die("Error de conexión a la base de datos: " . $e->getMessage());
         }
     }
-    
-    // Método estático para obtener la instancia única (patrón Singleton)
+
     public static function getInstance() {
         if (self::$instance == null) {
             self::$instance = new Database();

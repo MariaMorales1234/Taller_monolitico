@@ -7,16 +7,14 @@ $action = $_GET['action'] ?? 'index';
 $id = $_GET['id'] ?? null;  
 $codigo = $_GET['codigo'] ?? null;  
 
-// Ruta al controlador
 $controllerFile = "../controllers/{$controller}Controller.php";
 if (file_exists($controllerFile)) {
     require_once $controllerFile;
     $controllerClass = ucfirst($controller) . 'Controller';
     if (class_exists($controllerClass)) {
         $controllerInstance = new $controllerClass();
-        // Llamar a la acción
+
         if (method_exists($controllerInstance, $action)) {
-            // Pasar $id para notas, $codigo para otros
             if ($controller == 'nota') {
                 $controllerInstance->$action($id);
             } else {

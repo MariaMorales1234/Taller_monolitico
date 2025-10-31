@@ -25,7 +25,6 @@ class Estudiante {
     }
 
     public function update($codigo, $nombre, $email, $programa) {
-        // Verificar si tiene notas
         $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM notas WHERE estudiante = ?");
         $stmt->execute([$codigo]);
         if ($stmt->fetchColumn() > 0) return false;
@@ -34,7 +33,6 @@ class Estudiante {
     }
 
     public function delete($codigo) {
-        // Verificar si tiene notas
         $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM notas WHERE estudiante = ?");
         $stmt->execute([$codigo]);
         if ($stmt->fetchColumn() > 0) return false;
