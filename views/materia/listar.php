@@ -1,6 +1,8 @@
 <?php
 $content = '<h1>Materias</h1>
-<a href="index.php?controller=materia&action=create">Crear Nueva Materia</a>
+<div>
+    <a href="index.php?controller=materia&action=create" class="btn">Crear Nueva Materia</a>
+</div>
 <table>
     <tr>
         <th>Código</th>
@@ -14,7 +16,8 @@ foreach ($materias as $m) {
                     <td>{$m['nombre']}</td>
                     <td>{$m['programa']}</td>
                     <td>
-                        <a href='index.php?controller=materia&action=edit&codigo={$m['codigo']}'>Editar</a> | <a href='index.php?controller=materia&action=delete&codigo={$m['codigo']}'>Eliminar</a>
+                        <a href='index.php?controller=materia&action=edit&codigo={$m['codigo']}'>Editar</a> | 
+                        <a href='index.php?controller=materia&action=delete&codigo={$m['codigo']}'>Eliminar</a>
                     </td>
                 </tr>";
 }

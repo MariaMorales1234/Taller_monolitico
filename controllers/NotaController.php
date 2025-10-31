@@ -3,7 +3,6 @@ require_once '../models/Nota.php';
 require_once '../models/Estudiante.php';
 require_once '../models/Materia.php';
 
-
 class NotaController
 {
     private $model;
@@ -27,7 +26,7 @@ class NotaController
     {
         $estudiantes = $this->estudianteModel->getAll();
         $materias = $this->materiaModel->getAll();
-        if ($_SERVER['REQUEST-METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $estudiante = $_POST['estudiante'];
             $materia = $_POST['materia'];
             $actividad = trim($_POST['actividad']);

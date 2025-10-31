@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Notas</title>
+    <title>Plataforma Academica</title>
     <link rel="stylesheet" href="../public/css/style.css">
 </head>
 <body>
     <div class="header">
-        <h1>Gestión de Notas</h1>
+        <h1>Plataforma Academica</h1>
         <p>Sistema de gestión académica</p>
     </div>
     <nav>
@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="footer">
-        <p>&copy; 2023 Gestión de Notas</p>
+        <p></p>
     </div>
 </body>
 </html>

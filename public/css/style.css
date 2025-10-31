@@ -163,6 +163,7 @@ button, .btn {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    text-decoration: none;
 }
 
 button:hover, .btn:hover {
@@ -181,7 +182,6 @@ a.btn-action {
     font-size: 14px;
     margin-right: 10px;
     transition: all 0.3s;
-    text-decoration: none !important;
 }
 
 a.btn-action:hover {
@@ -211,4 +211,8 @@ a.btn-action:hover {
     align-items: center;
     color: #2b542e;
     font-weight: 500;
+}
+
+a{
+    text-decoration: none;
 }
