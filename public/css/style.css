@@ -12,7 +12,6 @@ html, body {
     color: #333;
 }
 
-/* Header */
 .header {
     background-color: #B9EFA6;
     padding: 35px 20px;
@@ -34,14 +33,13 @@ html, body {
     margin-top: 8px;
 }
 
-/* Navegación (adaptada a botones verdes) */
 nav {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 30px;
     padding: 20px 0;
-    background-color: #B9EFA6; /* Fondo verde claro para integrar */
+    background-color: #B9EFA6; 
 }
 
 nav a {
@@ -62,12 +60,11 @@ nav a:hover {
     box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
-/* Main y Contenedor */
 .main {
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Cambiado para que el contenido no esté centrado verticalmente */
+    align-items: flex-start; 
     padding: 40px 20px;
 }
 
@@ -87,7 +84,6 @@ nav a:hover {
     box-shadow: 0 10px 40px rgba(0,0,0,0.2);
 }
 
-/* Títulos */
 h1 {
     font-family: "Momo Trust Display", sans-serif;
     font-size: 32px;
@@ -96,7 +92,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* Tablas */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -122,9 +117,16 @@ table tr:hover {
     background-color: #e6f4ea;
 }
 
-/* Formularios */
+table td a {
+    color: #000;
+}
+
+table td a:hover{
+    color: #7AC431;
+}
+
 form {
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
 }
 
@@ -151,7 +153,6 @@ input:focus, select:focus {
     outline: none;
 }
 
-/* Botones */
 button, .btn {
     background: #7AC431;
     color: white;
@@ -164,6 +165,7 @@ button, .btn {
     transition: all 0.3s ease;
     box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     text-decoration: none;
+    margin-right: 20px;
 }
 
 button:hover, .btn:hover {
@@ -172,7 +174,6 @@ button:hover, .btn:hover {
     box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
-/* Enlaces de acciones (Editar, Eliminar) */
 a.btn-action {
     background: #7AC431;
     color: white;
@@ -189,7 +190,6 @@ a.btn-action:hover {
     transform: translateY(-2px);
 }
 
-/* Mensajes de error */
 .error {
     color: #e74c3c;
     background-color: #f8d7da;
@@ -199,7 +199,6 @@ a.btn-action:hover {
     text-align: center;
 }
 
-/* Footer */
 .footer {
     background-color: #B9EFA6;
     height: 60px;

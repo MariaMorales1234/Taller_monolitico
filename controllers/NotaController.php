@@ -47,7 +47,7 @@ class NotaController
 
     public function edit($id)
     {
-        if ($_SERVER['REQUEST-METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $nota = floatval($_POST['nota']);
             if ($nota < 0 || $nota > 5) {
                 echo "La nota debe estar entre 0 y 5.";
