@@ -31,7 +31,7 @@ class NotaController
             $materia = $_POST['materia'];
             $actividad = trim($_POST['actividad']);
             $nota = floatval($_POST['nota']);
-            if (empty($estudiante) || empty($meteria) || empty ($actividad) || $nota <0 || $nota >5) {
+            if (empty($estudiante) || empty($materia) || empty ($actividad) || $nota <0 || $nota >5) {
                 echo "Todos los campos son obligatorios y la nota debe estar entre 0 y 5.";
                 return;
             }
